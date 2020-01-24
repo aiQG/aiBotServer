@@ -14,7 +14,7 @@ public func routes(_ router: Router) throws {
     }
 
 	router.post { req -> String in
-		print("\n\(req)\n")
+		print("\n\(req.parameters)\n")
 		return "\(req)"
 	}
 	
