@@ -14,7 +14,7 @@ public func routes(_ router: Router) throws {
     }
 
 	router.post { req -> String in
-		print("\n\(req.parameters.values)\n")
+		gotPOSTMessage(req: req)
 		return "\(req)"
 	}
 	
@@ -23,4 +23,10 @@ public func routes(_ router: Router) throws {
     router.get("todos", use: todoController.index)
     router.post("todos", use: todoController.create)
     router.delete("todos", Todo.parameter, use: todoController.delete)
+}
+
+func gotPOSTMessage(req:Request) {
+	let reqString = "\(req)".split(separator: "\n")
+	
+	print(reqString)
 }
