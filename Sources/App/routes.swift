@@ -15,7 +15,7 @@ public func routes(_ router: Router) throws {
 
 	router.post { req -> String in
 		print(req)
-		return "\(req)"
+		return "\n啊\n\(req)\n"
 	}
 	
     // Example of configuring a controller
