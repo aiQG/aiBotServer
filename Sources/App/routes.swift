@@ -15,25 +15,16 @@ public func routes(_ router: Router) throws {
 
 	router.post { req -> AI in
 		
-		let GetJSON = try req.content.decode(JSONMessage.self)//.map(to: HTTPStatus.self)
-		
-		print(GetJSON)
+		try req.content.decode(JSONMessage.self).map(to: HTTPStatus.self) { m in
+			print("in")
+			print(type(of: m))
+			print("out")
+			return .ok
+		}
 		
 		
 		return AI(reply: "收到", auto_escape: false)
 	}
-//	router.post { req -> Future<HTTPStatus> in
-//		//gotPOSTMessage(req: req)
-//		//return "\(req)"
-//		print("\nAAAAAAA")
-//		return try req.content.decode(JSONMessage.self).map(to: HTTPStatus.self) { m in
-//			print("in")
-//			print(m)
-//			print("out")
-//			return .ok
-//		}
-//
-//	}
 	
     // Example of configuring a controller
     let todoController = TodoController()
