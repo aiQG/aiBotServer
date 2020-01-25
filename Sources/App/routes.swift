@@ -15,15 +15,14 @@ public func routes(_ router: Router) throws {
 
 	router.post { req -> AIMessage in
 		// 取出JSON解析结果
-		var temp: JSONMessage?
+		var message: JSONMessage?
 		try req.content.decode(JSONMessage.self).map(to: HTTPStatus.self){m in
-			temp = m
+			message = m
 			return .ok
 		}
 		
-		print(temp)
-		
-		return AIMessage(reply: "收到", auto_escape: false)
+		let aiMessage = AI(m: message!)
+		return aiMessage.replyMessage
 	}
 	
     // Example of configuring a controller
