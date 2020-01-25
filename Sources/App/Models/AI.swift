@@ -39,12 +39,6 @@ class AI {
 	}
 	
 	func privateMessage() {
-		// 去掉"@aiBot"
-		let strStart = self.message.raw_message!
-			.index(self.message.raw_message!.startIndex, offsetBy: 0)
-		let strEnd = self.message.raw_message!
-			.index(self.message.raw_message!.startIndex, offsetBy: 5)
-		self.message.raw_message!.replaceSubrange(strStart...strEnd, with: "")
 		// 替换
 		self.replyMessage.reply =
 			self.message.raw_message!.reduce(into: "") { (res, c) in
@@ -62,6 +56,28 @@ class AI {
 	
 	func groupMessage() {
 		print(message)
-		//privateMessage()
+		
+		// 去掉"[CQ:at,qq=2550765853]"
+		let strStart = self.message.raw_message!
+			.index(self.message.raw_message!.startIndex, offsetBy: 0)
+		let strEnd = self.message.raw_message!
+			.index(self.message.raw_message!.startIndex, offsetBy: "[CQ:at,qq=\(message.self_id ?? 0)]".count-1)
+		self.message.raw_message!.replaceSubrange(strStart...strEnd, with: "")
+		
+		// 替换
+		self.replyMessage.reply =
+			self.message.raw_message!.reduce(into: "") { (res, c) in
+			switch c {
+			case "?", "？":
+				res! += "!"
+			case "吗", "呢":
+				res! += ""
+			default:
+				res! += String(c)
+			}
+		}
+		return
 	}
+	
+	
 }
