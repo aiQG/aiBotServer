@@ -8,7 +8,7 @@
 import Vapor
 
 struct AIMessage: Content {
-	var reply: String? = nil			/// 回复内容
+	var reply: String? = ""				/// 回复内容
 	var auto_escape: Bool = false		/// 是否解析CQ码
 	var at_sender: Bool = true			/// 是否at发送者
 	
