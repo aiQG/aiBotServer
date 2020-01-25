@@ -15,12 +15,9 @@ public func routes(_ router: Router) throws {
 
 	router.post { req -> AI in
 		
-		try req.content.decode(JSONMessage.self).map(to: HTTPStatus.self) { m in
-			print("in")
-			print(type(of: m))
-			print("out")
-			return .ok
-		}
+		let temp = try req.content.decode(JSONMessage.self)
+		
+		dump(temp)
 		
 		
 		return AI(reply: "收到", auto_escape: false)
