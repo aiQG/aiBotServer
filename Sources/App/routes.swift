@@ -17,8 +17,13 @@ public func routes(_ router: Router) throws {
 		
 		let temp = try req.content.decode(JSONMessage.self)
 		
-		dump(temp)
+		let out = temp.map(to: JSONMessage.self, { (m) -> JSONMessage in
+			return m
+		})
 		
+		print(out)
+		print()
+		dump(out)
 		
 		return AI(reply: "收到", auto_escape: false)
 	}
