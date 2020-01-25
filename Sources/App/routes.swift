@@ -24,9 +24,11 @@ public func routes(_ router: Router) throws {
 			}
 			return .ok
 		}
-		
-		let aiMessage = AI(m: message!)
-		return aiMessage.replyMessage
+		if message != nil {
+			let aiMessage = AI(m: message!)
+			return aiMessage.replyMessage
+		}
+		return AIMessage()
 	}
 	
     // Example of configuring a controller
