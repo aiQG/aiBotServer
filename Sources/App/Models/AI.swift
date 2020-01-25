@@ -48,7 +48,6 @@ class AI {
 		// 替换
 		self.replyMessage.reply =
 			self.message.raw_message!.reduce(into: "") { (res, c) in
-				print(c)
 			switch c {
 			case "?", "？":
 				res! += "!"
@@ -62,6 +61,6 @@ class AI {
 	}
 	
 	func groupMessage() {
-		
+		privateMessage()
 	}
 }
