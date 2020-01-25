@@ -13,17 +13,17 @@ public func routes(_ router: Router) throws {
         return "Hello, world!\(req)"
     }
 
-	router.post { req -> AI in
+	router.post { req -> AIMessage in
+		// 取出JSON解析结果
 		var temp: JSONMessage?
-		
 		try req.content.decode(JSONMessage.self).map(to: HTTPStatus.self){m in
 			temp = m
 			return .ok
 		}
-		print(temp!)
 		
+		print(temp)
 		
-		return AI(reply: "收到", auto_escape: false)
+		return AIMessage(reply: "收到", auto_escape: false)
 	}
 	
     // Example of configuring a controller
