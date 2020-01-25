@@ -46,7 +46,7 @@ struct JSONMessage: Content {
 		var role: String?		/// 职位`"owner"`, `"admin"`or `"member"`
 		var title: String?		/// 专属头衔
 	}
-	var sender: JSONSender
+	var sender: JSONSender?
 	var user_id: UInt64?
 	
 	// 群聊
