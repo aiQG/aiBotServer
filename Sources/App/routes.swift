@@ -18,7 +18,9 @@ public func routes(_ router: Router) throws {
 		var message: JSONMessage?
 		try req.content.decode(JSONMessage.self).map(to: HTTPStatus.self){m in
 			// 判断是否被at
-			if m.raw_message!.hasPrefix("[CQ:at,qq=\(m.self_id ?? 0)]") {
+			if m.raw_message!.hasPrefix("[CQ:at,qq=\(m.self_id ?? 0)]")
+				&& m.message_type == "group"
+				|| m.message_type == "private" {
 				message = m
 				return .ok
 			}
