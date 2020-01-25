@@ -39,17 +39,13 @@ class AI {
 	}
 	
 	func privateMessage() {
+		// 去掉"@aiBot"
 		let strStart = self.message.raw_message!
 			.index(self.message.raw_message!.startIndex, offsetBy: 0)
-		print("A")
-		
 		let strEnd = self.message.raw_message!
-			.index(self.message.raw_message!.endIndex, offsetBy: 5)
-		print("B")
-		
+			.index(self.message.raw_message!.startIndex, offsetBy: 5)
 		self.message.raw_message!.replaceSubrange(strStart...strEnd, with: "")
-		print(self.message.raw_message)
-		
+		// 替换
 		self.replyMessage.reply =
 			self.message.raw_message!.reduce(into: "") { (res, c) in
 				print(c)
@@ -62,7 +58,6 @@ class AI {
 				res! += String(c)
 			}
 		}
-		print("end")
 		return
 	}
 	
