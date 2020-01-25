@@ -43,7 +43,7 @@ class AI {
 			.index(self.message.raw_message!.startIndex, offsetBy: 0)
 		let strEnd = self.message.raw_message!
 			.index(self.message.raw_message!.endIndex, offsetBy: 5)
-		self.message.raw_message!.replaceSubrange(strStart...strEnd, with: "")
+		//self.message.raw_message!.replaceSubrange(strStart...strEnd, with: "")
 		
 		self.replyMessage.reply =
 			self.message.raw_message!.reduce(into: "") { (res, c) in
