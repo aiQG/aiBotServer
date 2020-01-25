@@ -17,7 +17,11 @@ public func routes(_ router: Router) throws {
 		// 取出JSON解析结果
 		var message: JSONMessage?
 		try req.content.decode(JSONMessage.self).map(to: HTTPStatus.self){m in
-			message = m
+			// 判断是否被at
+			if m.raw_message!.hasPrefix("[CQ:at,qq=\(m.self_id ?? 0)]") {
+				message = m
+				return .ok
+			}
 			return .ok
 		}
 		
