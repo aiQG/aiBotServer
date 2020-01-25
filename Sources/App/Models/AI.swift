@@ -61,6 +61,7 @@ class AI {
 	}
 	
 	func groupMessage() {
+		print(message)
 		privateMessage()
 	}
 }
