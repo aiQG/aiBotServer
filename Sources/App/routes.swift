@@ -14,6 +14,12 @@ public func routes(_ router: Router) throws {
     }
 
 	router.post { req -> AI in
+		
+		let GetJSON = try req.content.decode(JSONMessage.self)//.map(to: HTTPStatus.self)
+		
+		print(GetJSON)
+		
+		
 		return AI(reply: "收到", auto_escape: false)
 	}
 //	router.post { req -> Future<HTTPStatus> in

@@ -10,4 +10,6 @@ import Vapor
 struct AI: Content {
 	var reply: String
 	var auto_escape: Bool
+	
+	
 }
