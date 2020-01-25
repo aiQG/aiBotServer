@@ -55,8 +55,6 @@ class AI {
 	}
 	
 	func groupMessage() {
-		print(message)
-		
 		// 去掉"[CQ:at,qq=2550765853]"
 		let strStart = self.message.raw_message!
 			.index(self.message.raw_message!.startIndex, offsetBy: 0)
