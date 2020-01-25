@@ -10,18 +10,16 @@ import Vapor
 
 struct JSONMessage: Content {
 	// 必须先判断
-	var post_type: String		/// `"message"`, `"notice"`, `"request"`
-	var notice_type: String
+	var post_type: String?		/// `"message"`, `"notice"`, `"request"`
+	var notice_type: String?
 	/// 讨论组: `"group_upload"`, `"discuss"`
 	/// 群员减少: `"group_decrease"`
 	/// 群员增加: `"group_increase"`
 	/// 禁言: `"group_ban"`
 	/// 加好友: `"friend_add"`
 	
-	
-	
-	var message_type: String	/// `"group"` or `"private"`
-	var sub_type: String
+	var message_type: String?	/// `"group"` or `"private"`
+	var sub_type: String?
 	/// 私聊:  `"friend"`, `"group"`, `"discuss"`, `"other"`
 	/// 群: `"normal"`, `"anonymous"`, `"notice"`
 	/// 管理员: `"set"`, `"unset"`
@@ -31,12 +29,12 @@ struct JSONMessage: Content {
 	/// 加群请求/邀请: `"add"`, `"invite"`
 	
 	// 群聊&私聊
-	var self_id: UInt64			/// Bot QQ号
-	var time: UInt64
-	var message_id: UInt32
-	var message: String
-	var raw_message: String
-	var font: UInt32
+	var self_id: UInt64?		/// Bot QQ号
+	var time: UInt64?
+	var message_id: UInt32?
+	var message: String?
+	var raw_message: String?
+	var font: UInt32?
 	struct JSONSender: Content {
 		var age: UInt32?
 		var nickname: String?
@@ -49,10 +47,10 @@ struct JSONMessage: Content {
 		var title: String?		/// 专属头衔
 	}
 	var sender: JSONSender
-	var user_id: UInt64
+	var user_id: UInt64?
 	
 	// 群聊
-	var group_id: UInt64
+	var group_id: UInt64?
 	struct JSONAnonymous: Content {
 		var id: UInt64?
 		var name: String?
@@ -69,8 +67,8 @@ struct JSONMessage: Content {
 	}
 	
 	// 加好友请求 加群请求 加群邀请
-	var request_type: String/// `"friend"`, `"group"`
-	var comment: String		/// 验证信息
+	var request_type: String?/// `"friend"`, `"group"`
+	var comment: String?	 /// 验证信息
 	
 	
 }
