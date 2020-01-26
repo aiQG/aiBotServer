@@ -120,7 +120,8 @@ class AI {
 			"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
 			"兔子: 返回出现的兔子表情个数\n" +
 			"dangerous: 执行命令\n" +
-			"GitHub: 返回aiBot的项目地址"
+			"GitHub: 返回aiBot的项目地址\n" +
+            "echo: 回声"
 			return
 			
 		case "艹", "草":
@@ -140,7 +141,16 @@ class AI {
 			
 		case "github":
 			self.replyMessage.reply = "\naiBot项目连接: github.com/aiQG/aiBotServer"
-		default:
+		case "echo":
+            var wordArray = self.message.raw_message!.split(separator: "");
+            wordArray = wordArray.dropFirst(4);
+            var word = "\n";
+            for(int i = 0;i<wordArray.count;i++){
+                word+=("".join(wordArray))+"\n";
+                wordArray.dropFirst(1);
+            }
+            self.replyMessage.reply = word;
+        default:
 			break
 		}
 	}
