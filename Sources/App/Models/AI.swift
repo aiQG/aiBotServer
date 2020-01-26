@@ -65,7 +65,7 @@ class AI {
 					艹timies += 1
 				}
 			})
-		}
+			
 			
 			if message.raw_message!.contains("[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg") {
 				static🐰 += 1
