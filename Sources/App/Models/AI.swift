@@ -67,10 +67,10 @@ class AI {
 			if message.raw_message!.contains("[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg") {
 				static🐰 += 1
 			}
-			if message.raw_message!.contains("[CQ:image,file=B7B0DB87724D23B48134DAB2B4E25DA5.jpg") {
+			if message.raw_message!.contains("[CQ:image,file=B7B0DB87724D23B48134DAB2B4E25DA5.gif") {
 				dynamic🐰ear += 1
 			}
-			if message.raw_message!.contains("[CQ:image,file=AB3F72DEECF5C24A54BFEB938F253296.jpg") {
+			if message.raw_message!.contains("[CQ:image,file=AB3F72DEECF5C24A54BFEB938F253296.gif") {
 				dynamic🐰face += 1
 			}
 			if message.raw_message!.contains("[CQ:image,file=16C212D34EC17F62F84430BB86748602.jpg") {
@@ -120,11 +120,11 @@ class AI {
 			
 		case "兔子":
 			self.replyMessage.reply =
-			"static🐰 = \(static🐰)" +
-			"dynamic🐰ear = \(dynamic🐰ear)" +
-			"dynamic🐰face = \(dynamic🐰face)" +
-			"smoke🐰 = \(smoke🐰)" +
-			"black🐰 = \(black🐰)" +
+			"static🐰 = \(static🐰)\n" +
+			"dynamic🐰ear = \(dynamic🐰ear)\n" +
+			"dynamic🐰face = \(dynamic🐰face)\n" +
+			"smoke🐰 = \(smoke🐰)\n" +
+			"black🐰 = \(black🐰)\n" +
 			"total = \(static🐰 + dynamic🐰ear + dynamic🐰face + smoke🐰 + black🐰)"
 			return
 		default:
