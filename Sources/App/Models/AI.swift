@@ -84,7 +84,7 @@ class AI {
 			return
 		}
 		
-		// 去掉"[CQ:at,qq=2550765853]"
+		// 被at先去掉"[CQ:at,qq=2550765853]"
 		let strStart = self.message.raw_message!
 			.index(self.message.raw_message!.startIndex, offsetBy: 0)
 		let strEnd = self.message.raw_message!
@@ -108,6 +108,7 @@ class AI {
 		
 		switch cmds.first {
 		case "echo":
+			print(cmds)
 			self.replyMessage.reason =
 				execCmds(bin: "echo", arg: [String](cmds[1...]))
 			return
@@ -159,6 +160,7 @@ class AI {
 
 	// dangerous founction
 	func execCmds(bin: String, arg: [String]) -> String {
+		print(bin,arg)
 		let task = Process()
 		let pipe = Pipe()
 		var arguments = arg
