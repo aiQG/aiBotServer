@@ -108,7 +108,7 @@ class AI {
 		
 		switch cmds.first?.lowercased() {
 		case "dangerous":
-			self.replyMessage.reply = "本功能被禁用(写死了)"
+			self.replyMessage.reply = "本功能被禁用[写(注)死(释)了]"
 			//	execCmds(arg: [String](cmds[1...]))
 				//execCmds(bin: "echo", arg: [String](cmds[1...]))
 			return
@@ -120,7 +120,8 @@ class AI {
 			"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
 			"兔子: 返回出现的兔子表情个数\n" +
 			"dangerous: 执行命令\n" +
-			"GitHub: 返回aiBot的项目地址"
+			"surprise: 一个惊喜！\n" +
+			"GitHub: 返回aiBot的项目地址" 
 			return
 			
 		case "艹", "草":
@@ -140,6 +141,14 @@ class AI {
 			
 		case "github":
 			self.replyMessage.reply = "\naiBot项目连接: github.com/aiQG/aiBotServer"
+			return
+
+		case "surprise":
+			self.replyMessage.ban = true
+			self.replyMessage.ban_duration = UInt32.random(in:1...30)
+			self.replyMessage.reply = "\nAre you surprised?"
+			return
+
 		default:
 			break
 		}
@@ -184,3 +193,4 @@ class AI {
 	
 	
 }
+
