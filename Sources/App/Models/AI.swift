@@ -80,6 +80,18 @@ class AI {
 	}
 	
 	func groupMessage() {
+		// 没被at则遍历信息每个字符
+		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
+			message.raw_message.map{ c in
+				if c == "艹" || c == "草" {
+					艹timies += 1
+				}
+			}
+			return
+		}
+		
+		
+		
 		// 去掉"[CQ:at,qq=2550765853]"
 		let strStart = self.message.raw_message!
 			.index(self.message.raw_message!.startIndex, offsetBy: 0)
