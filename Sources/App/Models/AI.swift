@@ -7,6 +7,8 @@
 
 import Vapor
 
+var 艹timies = 0
+
 struct AIMessage: Content {
 	var reply: String? = nil			/// 回复内容
 	var auto_escape: Bool = false		/// 是否解析CQ码
@@ -39,6 +41,29 @@ class AI {
 	}
 	
 	func privateMessage() {
+		//处理cmd
+		let cmds = self.message.raw_message!.split(separator: " ")
+		
+		switch cmds.first {
+		case "help":
+			self.replyMessage.reply =
+			"aiBot 支持命令:\n" +
+			"help: 显示此帮助\n" +
+			"艹: 返回出现的\"艹\"的个数\n"
+			return
+			
+		case "艹":
+			self.replyMessage.reply =
+			"\"艹\"一共出现了 \(艹timies) 次"
+			return
+			
+		default:
+			break
+		}
+		
+		
+		
+		
 		// 替换
 		self.replyMessage.reply =
 			self.message.raw_message!.reduce(into: "") { (res, c) in
@@ -61,6 +86,16 @@ class AI {
 		let strEnd = self.message.raw_message!
 			.index(self.message.raw_message!.startIndex, offsetBy: "[CQ:at,qq=\(message.self_id ?? 0)]".count-1)
 		self.message.raw_message!.replaceSubrange(strStart...strEnd, with: "")
+		
+		// 处理cmd
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		// 替换
 		self.replyMessage.reply =
