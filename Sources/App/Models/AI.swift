@@ -114,7 +114,7 @@ class AI {
 			return
 			
 		case "help":
-			self.replyMessage.reply =
+			self.replyMessage.reply = "\n" +
 			"aiBot 支持命令:\n" +
 			"help: 显示此帮助\n" +
 			"艹: 返回出现的\"艹\"的个数\n" +
@@ -123,12 +123,12 @@ class AI {
 			return
 			
 		case "艹":
-			self.replyMessage.reply =
+			self.replyMessage.reply = "\n" +
 			"\"艹\"/\"草\"一共出现了 \(艹timies) 次"
 			return
 			
 		case "兔子":
-			self.replyMessage.reply =
+			self.replyMessage.reply = "\n" +
 			"static🐰 = \(static🐰)\n" +
 			"dynamic🐰ear = \(dynamic🐰ear)\n" +
 			"dynamic🐰face = \(dynamic🐰face)\n" +
