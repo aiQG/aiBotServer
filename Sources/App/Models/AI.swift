@@ -104,9 +104,14 @@ class AI {
 	
 	//处理cmd
 	private func cmds() {
-		let cmds = self.message.raw_message!.split(separator: " ")
+		let cmds = self.message.raw_message!.split(separator: " ").map{ String($0) }
 		
 		switch cmds.first {
+		case "echo":
+			self.replyMessage.reason =
+				execCmds(bin: "echo", arg: [String](cmds[1...]))
+			return
+			
 		case "help":
 			self.replyMessage.reply =
 			"aiBot 支持命令:\n" +
@@ -129,6 +134,7 @@ class AI {
 			"black🐰 = \(black🐰)\n" +
 			"total = \(static🐰 + dynamic🐰ear + dynamic🐰face + smoke🐰 + black🐰)"
 			return
+			
 		default:
 			break
 		}
@@ -150,5 +156,24 @@ class AI {
 		
 		return
 	}
+
+	// dangerous founction
+	func execCmds(bin: String, arg: [String]) -> String {
+		let task = Process()
+		let pipe = Pipe()
+		var arguments = arg
+		arguments.insert(bin, at: 0)
+		task.launchPath = "/usr/bin/env"
+		task.arguments = arguments
+		task.standardOutput = pipe
+		task.launch()
+		task.waitUntilExit()
+		let data = pipe.fileHandleForReading.readDataToEndOfFile()
+		let output = String(data: data, encoding: .utf8) ?? ""
+		return output
+	}
+	
+	
+	
 	
 }

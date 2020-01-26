@@ -17,7 +17,6 @@ public func routes(_ router: Router) throws {
 		// 取出JSON解析结果
 		var message: JSONMessage?
 		try req.content.decode(JSONMessage.self).map(to: HTTPStatus.self){m in
-			print(m)
 			message = m
 			return .ok
 		}
