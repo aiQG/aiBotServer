@@ -109,7 +109,7 @@ class AI {
 		switch cmds.first {
 		case "echo":
 			print(cmds)
-			self.replyMessage.reason =
+			self.replyMessage.reply =
 				execCmds(bin: "echo", arg: [String](cmds[1...]))
 			return
 			
