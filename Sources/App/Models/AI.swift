@@ -41,41 +41,11 @@ class AI {
 	}
 	
 	func privateMessage() {
-		//处理cmd
-		let cmds = self.message.raw_message!.split(separator: " ")
-		
-		switch cmds.first {
-		case "help":
-			self.replyMessage.reply =
-			"aiBot 支持命令:\n" +
-			"help: 显示此帮助\n" +
-			"艹: 返回出现的\"艹\"的个数\n"
+		cmds()
+		if self.replyMessage.reply != nil {
 			return
-			
-		case "艹":
-			self.replyMessage.reply =
-			"\"艹\"一共出现了 \(艹timies) 次"
-			return
-			
-		default:
-			break
 		}
-		
-		
-		
-		
-		// 替换
-		self.replyMessage.reply =
-			self.message.raw_message!.reduce(into: "") { (res, c) in
-			switch c {
-			case "?", "？":
-				res! += "!"
-			case "吗", "呢":
-				res! += ""
-			default:
-				res! += String(c)
-			}
-		}
+		AICore()
 		return
 	}
 	
@@ -90,8 +60,6 @@ class AI {
 			return
 		}
 		
-		
-		
 		// 去掉"[CQ:at,qq=2550765853]"
 		let strStart = self.message.raw_message!
 			.index(self.message.raw_message!.startIndex, offsetBy: 0)
@@ -100,16 +68,40 @@ class AI {
 		self.message.raw_message!.replaceSubrange(strStart...strEnd, with: "")
 		
 		// 处理cmd
+		cmds()
+		if self.replyMessage.reply != nil{
+			return
+		}
 		
+		AICore()
+		return
+	}
+	
+	
+	//处理cmd
+	private func cmds() {
+		let cmds = self.message.raw_message!.split(separator: " ")
 		
-		
-		
-		
-		
-		
-		
-		
-		// 替换
+		switch cmds.first {
+		case "help":
+			self.replyMessage.reply =
+			"aiBot 支持命令:\n" +
+			"help: 显示此帮助\n" +
+			"艹: 返回出现的\"艹\"的个数\n"
+			return
+			
+		case "艹":
+			self.replyMessage.reply =
+			"\"艹\"/\"草\"一共出现了 \(艹timies) 次"
+			return
+			
+		default:
+			break
+		}
+	}
+	
+	private func AICore() {
+		// 估价上亿的AI核心代码
 		self.replyMessage.reply =
 			self.message.raw_message!.reduce(into: "") { (res, c) in
 			switch c {
@@ -121,8 +113,8 @@ class AI {
 				res! += String(c)
 			}
 		}
+		
 		return
 	}
-	
 	
 }
