@@ -120,9 +120,12 @@ class AI {
 			
 		case "兔子":
 			self.replyMessage.reply =
-			"[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg,url=https://gchat.qpic.cn/gchatpic_new/1207694344/627776551-2359115164-9E93344667FC9DD95E85203DE5211C07/0?term=2]\n" +
-			"一共出现了 \(🐰) 次"
-			self.replyMessage.auto_escape = true
+			"static🐰 = \(static🐰)" +
+			"dynamic🐰ear = \(dynamic🐰ear)" +
+			"dynamic🐰face = \(dynamic🐰face)" +
+			"smoke🐰 = \(smoke🐰)" +
+			"black🐰 = \(black🐰)" +
+			"total = \(static🐰 + dynamic🐰ear + dynamic🐰face + smoke🐰 + black🐰)"
 			return
 		default:
 			break
