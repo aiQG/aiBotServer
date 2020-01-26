@@ -107,10 +107,11 @@ class AI {
 		let cmds = self.message.raw_message!.split(separator: " ").map{ String($0) }
 		
 		switch cmds.first {
-		case "echo":
+		case "dangerous":
 			print(cmds)
 			self.replyMessage.reply =
-				execCmds(bin: "echo", arg: [String](cmds[1...]))
+				execCmds(arg: [String](cmds[1...]))
+				//execCmds(bin: "echo", arg: [String](cmds[1...]))
 			return
 			
 		case "help":
@@ -159,14 +160,14 @@ class AI {
 	}
 
 	// dangerous founction
-	func execCmds(bin: String, arg: [String]) -> String {
-		print(bin,arg)
+	func execCmds(arg: [String]) -> String {
+//		print(bin,arg)
 		let task = Process()
 		let pipe = Pipe()
-		var arguments = arg
-		arguments.insert(bin, at: 0)
+//		var arguments = arg
+//		arguments.insert(bin, at: 0)
 		task.launchPath = "/usr/bin/env"
-		task.arguments = arguments
+		task.arguments = arg
 		task.standardOutput = pipe
 		task.launch()
 		task.waitUntilExit()
