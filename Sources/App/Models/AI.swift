@@ -117,7 +117,7 @@ class AI {
 			self.replyMessage.reply = "\n" +
 			"aiBot 支持命令:\n" +
 			"help: 显示此帮助\n" +
-			"艹: 返回出现的\"艹\"的个数\n" +
+			"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
 			"兔子: 返回出现的兔子表情个数\n" +
 			"dangerous: 执行命令\n" +
 			"GitHub: 返回aiBot的项目地址"
