@@ -7,9 +7,13 @@
 
 import Vapor
 
-var 艹timies = 0
-var 🐰 = 0
-
+// 统计
+var 艹timies: UInt32 = 0
+var static🐰: UInt32 = 0
+var dynamic🐰ear: UInt32 = 0
+var dynamic🐰face: UInt32 = 0
+var smoke🐰: UInt32 = 0
+var black🐰: UInt32 = 0
 
 struct AIMessage: Content {
 	var reply: String? = nil			/// 回复内容
@@ -59,6 +63,23 @@ class AI {
 					艹timies += 1
 				}
 			}
+			
+			if message.raw_message!.contains("[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg") {
+				static🐰 += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=B7B0DB87724D23B48134DAB2B4E25DA5.jpg") {
+				dynamic🐰ear += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=AB3F72DEECF5C24A54BFEB938F253296.jpg") {
+				dynamic🐰face += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=16C212D34EC17F62F84430BB86748602.jpg") {
+				smoke🐰 += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=9628EC83AC4DA822149CE58859CF2F5D.jpg") {
+				black🐰 += 1
+			}
+			
 			return
 		}
 		
