@@ -59,14 +59,12 @@ class AI {
 		// 没被at则遍历信息每个字符
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
 			message.raw_message!.map({ (c:Character) in
-				print(c)
 				if c == "艹" || c == "草" {
-					print("in")
 					艹timies += 1
 				}
 			})
 			
-			
+			// 判断是否有兔子表情
 			if message.raw_message!.contains("[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg") {
 				static🐰 += 1
 			}
@@ -113,7 +111,8 @@ class AI {
 			self.replyMessage.reply =
 			"aiBot 支持命令:\n" +
 			"help: 显示此帮助\n" +
-			"艹: 返回出现的\"艹\"的个数\n"
+			"艹: 返回出现的\"艹\"的个数\n" +
+			"兔子: 返回出现的兔子表情个数"
 			return
 			
 		case "艹":
