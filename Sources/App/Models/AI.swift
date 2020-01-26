@@ -144,17 +144,17 @@ class AI {
 	
 	private func AICore() {
 		// 估价上亿的AI核心代码
-		self.replyMessage.reply =
-			self.message.raw_message!.reduce(into: "") { (res, c) in
-			switch c {
-			case "?", "？":
-				res! += "!"
-			case "吗", "呢":
-				res! += ""
-			default:
-				res! += String(c)
-			}
-		}
+		self.replyMessage.reply = ""
+//			self.message.raw_message!.reduce(into: "") { (res, c) in
+//			switch c {
+//			case "?", "？":
+//				res! += "!"
+//			case "吗", "呢":
+//				res! += ""
+//			default:
+//				res! += String(c)
+//			}
+//		}
 		
 		return
 	}
