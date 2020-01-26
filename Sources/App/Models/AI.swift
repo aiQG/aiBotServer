@@ -8,6 +8,8 @@
 import Vapor
 
 var 艹timies = 0
+var 🐰 = 0
+
 
 struct AIMessage: Content {
 	var reply: String? = nil			/// 回复内容
@@ -95,6 +97,12 @@ class AI {
 			"\"艹\"/\"草\"一共出现了 \(艹timies) 次"
 			return
 			
+		case "兔子":
+			self.replyMessage.reply =
+			"[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg,url=https://gchat.qpic.cn/gchatpic_new/1207694344/627776551-2359115164-9E93344667FC9DD95E85203DE5211C07/0?term=2]\n" +
+			"一共出现了 \(🐰) 次"
+			self.replyMessage.auto_escape = true
+			return
 		default:
 			break
 		}
