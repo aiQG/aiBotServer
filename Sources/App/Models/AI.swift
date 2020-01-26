@@ -58,13 +58,14 @@ class AI {
 	func groupMessage() {
 		// 没被at则遍历信息每个字符
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
-			message.raw_message.map{ c in
+			message.raw_message!.map({ (c:Character) in
 				print(c)
 				if c == "艹" || c == "草" {
 					print("in")
 					艹timies += 1
 				}
-			}
+			})
+		}
 			
 			if message.raw_message!.contains("[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg") {
 				static🐰 += 1
