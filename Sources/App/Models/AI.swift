@@ -122,7 +122,7 @@ class AI {
 			"dangerous: 执行命令"
 			return
 			
-		case "艹":
+		case "艹", "草":
 			self.replyMessage.reply = "\n" +
 			"\"艹\"/\"草\"一共出现了 \(艹timies) 次"
 			return
