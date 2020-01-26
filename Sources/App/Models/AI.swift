@@ -172,6 +172,7 @@ class AI {
 		task.waitUntilExit()
 		let data = pipe.fileHandleForReading.readDataToEndOfFile()
 		let output = String(data: data, encoding: .utf8) ?? ""
+		print(output)
 		return output
 	}
 	
