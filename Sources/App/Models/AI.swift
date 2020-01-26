@@ -106,7 +106,7 @@ class AI {
 	private func cmds() {
 		let cmds = self.message.raw_message!.split(separator: " ").map{ String($0) }
 		
-		switch cmds.first {
+		switch cmds.first?.lowercased() {
 		case "dangerous":
 			self.replyMessage.reply = "本功能被禁用(写死了)"
 			//	execCmds(arg: [String](cmds[1...]))
@@ -119,7 +119,8 @@ class AI {
 			"help: 显示此帮助\n" +
 			"艹: 返回出现的\"艹\"的个数\n" +
 			"兔子: 返回出现的兔子表情个数\n" +
-			"dangerous: 执行命令"
+			"dangerous: 执行命令\n" +
+			"GitHub: 返回aiBot的项目地址"
 			return
 			
 		case "艹", "草":
@@ -137,6 +138,8 @@ class AI {
 			"total = \(static🐰 + dynamic🐰ear + dynamic🐰face + smoke🐰 + black🐰)"
 			return
 			
+		case "github":
+			self.replyMessage.reply = "\naiBot项目连接: github.com/aiQG/aiBotServer"
 		default:
 			break
 		}
