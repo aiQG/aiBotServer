@@ -108,9 +108,8 @@ class AI {
 		
 		switch cmds.first {
 		case "dangerous":
-			print(cmds)
-			self.replyMessage.reply =
-				execCmds(arg: [String](cmds[1...]))
+			self.replyMessage.reply = "本功能被禁用(写死了)"
+			//	execCmds(arg: [String](cmds[1...]))
 				//execCmds(bin: "echo", arg: [String](cmds[1...]))
 			return
 			
@@ -119,7 +118,7 @@ class AI {
 			"aiBot 支持命令:\n" +
 			"help: 显示此帮助\n" +
 			"艹: 返回出现的\"艹\"的个数\n" +
-			"兔子: 返回出现的兔子表情个数" +
+			"兔子: 返回出现的兔子表情个数\n" +
 			"dangerous: 执行命令"
 			return
 			
