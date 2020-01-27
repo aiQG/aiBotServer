@@ -186,7 +186,7 @@ class AI {
 
 	// dangerous founction
 	func execCmds(arg: [String]) -> String {
-//		print(bin,arg)
+		print(arg)
 		let task = Process()
 		let pipe = Pipe()
 //		var arguments = arg
