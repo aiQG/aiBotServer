@@ -33,9 +33,10 @@ struct AIMessage: Content {
 class AI {
 	var message: JSONMessage!
 	var replyMessage = AIMessage()
-	init(m: JSONMessage) {
+	var req: Request!
+	init(m: JSONMessage, r: Request) {
 		self.message = m
-		
+		self.req = r
 		switch self.message.message_type! {
 		case "private":
 			privateMessage()
@@ -56,9 +57,13 @@ class AI {
 	}
 	
 	func groupMessage() {
+		// 色图判断
+		hentai()
+		
+		
 		// 没被at则遍历信息每个字符
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
-			message.raw_message!.map({ (c:Character) in
+			_ = message.raw_message!.map({ (c:Character) in
 				if c == "艹" || c == "草" {
 					艹times += 1
 				}
@@ -195,7 +200,34 @@ class AI {
 		return output
 	}
 	
-	
+	// 色图判断
+	func hentai() {
+		
+		
+		let sss = ImageRequest(models: "nudity", api_user: 1761246545, api_secret: "5GGjxXwzvpS5cda898rq", url: "")
+		guard let data = (try? URLEncodedFormEncoder().encode(sss)) else {
+			return
+		}
+		var dataStr: String = String(data: data, encoding: .utf8)!
+		dataStr += "&url=https%3a%2f%2fdun.163.com%2fpublic%2fres%2fweb%2fcase%2fsexy_danger_1.jpg"
+		print(data)
+		
+		guard let res = try? req.client().get("https://api.sightengine.com/1.0/check.json"+"?\(data)") else {
+			return
+		}
+		print(res)
+
+		_ = res.map(to: ImageResult.self) { (x) -> ImageResult in
+			_ = try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
+				print(m)
+				return .ok
+			}
+			return ImageResult(status: "a", request: ImageResult.ReplayRequest(id: "a", timestamp: 1, operations: 1), nudity: ImageResult.NudityResult(raw: 1, safe: 1, partial: 1), media: ImageResult.MediaRequest(id: "a", uri: "a"), error: nil)
+		}
+		
+		
+		
+	}
 	
 	
 }
