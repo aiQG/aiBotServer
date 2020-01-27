@@ -63,6 +63,7 @@ public func routes(_ router: Router) throws {
 		}
 		if message != nil {
 			let aiMessage = AI(m: message!, r: req)
+			print(aiMessage.replyMessage)
 			return aiMessage.replyMessage
 		}
 		return AIMessage()

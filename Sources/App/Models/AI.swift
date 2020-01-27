@@ -225,6 +225,7 @@ class AI {
 			try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
 				hentaiImageResult = m
 				print(hentaiImageResult)
+				self.replyMessage.reply = hentaiImageResult!.request.id
 				return .ok
 			}
 			return .ok//ImageResult(status: "a", request: ImageResult.ReplayRequest(id: "a", timestamp: 1, operations: 1), nudity: ImageResult.NudityResult(raw: 1, safe: 1, partial: 1), media: ImageResult.MediaRequest(id: "a", uri: "a"), error: nil)
