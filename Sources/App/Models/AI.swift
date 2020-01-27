@@ -35,7 +35,7 @@ class AI {
 	var replyMessage = AIMessage()
 	init(m: JSONMessage) {
 		self.message = m
-		
+		// 判断群聊信息/私聊信息
 		switch self.message.message_type! {
 		case "private":
 			privateMessage()
@@ -47,18 +47,32 @@ class AI {
 	}
 	
 	func privateMessage() {
+		// 色图判断
+		if message.message!.contains("[CQ:image,file=")
+		&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
+			let url = message.message!.split(separator: "]").map { (sb) -> String in
+				var x = sb
+				let range = x.range(of: ".jpg,url=")
+				x.removeSubrange(x.startIndex..<range!.upperBound)
+				return String(x)
+			}
+			hentai(url: url[0])
+		}
+		
 		cmds()
 		if self.replyMessage.reply != nil {
 			return
 		}
+		
 		AICore()
 		return
 	}
 	
 	func groupMessage() {
-		// 没被at则遍历信息每个字符
+	
+		// 没被at则遍历信息
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
-			message.raw_message!.map({ (c:Character) in
+			_ = message.raw_message!.map({ (c:Character) in
 				if c == "艹" || c == "草" {
 					艹times += 1
 				}
@@ -79,6 +93,18 @@ class AI {
 			}
 			if message.raw_message!.contains("[CQ:image,file=9628EC83AC4DA822149CE58859CF2F5D.jpg") {
 				black🐰 += 1
+			}
+			
+			// 判断色图
+			if message.message!.contains("[CQ:image,file=")
+			&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
+				let url = message.message!.split(separator: "]").map { (sb) -> String in
+					var x = sb
+					let range = x.range(of: ".jpg,url=")
+					x.removeSubrange(x.startIndex..<range!.upperBound)
+					return String(x)
+				}
+				hentai(url: url[0])
 			}
 			
 			return
@@ -179,11 +205,8 @@ class AI {
 
 	// dangerous founction
 	func execCmds(arg: [String]) -> String {
-//		print(bin,arg)
 		let task = Process()
 		let pipe = Pipe()
-//		var arguments = arg
-//		arguments.insert(bin, at: 0)
 		task.launchPath = "/usr/bin/env"
 		task.arguments = arg
 		task.standardOutput = pipe
@@ -195,7 +218,33 @@ class AI {
 		return output
 	}
 	
-	
-	
-	
+	// 色图判断
+	func hentai(url: String) {
+		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=\(url)"
+			.split(separator: " ").map{String($0)}
+		self.replyMessage.reply = execCmds(arg: [String](ttt))
+		
+		var status = String(self.replyMessage.reply!.split(separator: ":")[1].split(separator: " ").first!)
+		status.removeLast(3)
+		status.removeFirst()
+		if status == "success"{
+			var rate = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
+			rate.removeLast(2) // remove "\n" and ","
+
+			if Float(rate) ?? 0 <= 0.5 {
+				self.replyMessage.reply = ""
+				self.replyMessage.at_sender = false
+				return
+			}
+			self.replyMessage.at_sender = true
+			self.replyMessage.reply = "\n色图的概率为 \(Float(rate)! * 100)%"
+			if Float(rate) ?? 0 >= 0.8 {
+				// TODO: 保存到服务器
+				self.replyMessage.reply! += "\n已保存到服务器"
+			}
+			return
+		}
+		self.replyMessage.reply = ""
+		return
+	}
 }
