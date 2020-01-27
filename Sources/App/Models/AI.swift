@@ -235,19 +235,16 @@ class AI {
 		status.removeLast(3)
 		status.removeFirst()
 		if status == "success"{
-			print("A \(self.replyMessage.reply)")
-			self.replyMessage.reply = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
-			print("B \(self.replyMessage.reply)")
-			self.replyMessage.reply?.removeLast(2) // remove "\n" and ","
-			print("C \(self.replyMessage.reply)")
-			self.replyMessage.reply = "\n这张图是色图的概率为 \(String(describing: self.replyMessage.reply))"
-			print("D \(self.replyMessage.reply)")
-			self.replyMessage.at_sender = true
-			if Float(self.replyMessage.reply ?? "0")! <= 0.5 {
+			var rate = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
+			rate.removeLast(2) // remove "\n" and ","
+
+			if Float(rate) ?? 0 <= 0.5 {
 				self.replyMessage.reply = ""
 				self.replyMessage.at_sender = false
 				return
 			}
+			self.replyMessage.at_sender = true
+			self.replyMessage.reply = "\n这张图是色图的概率为 \(rate)"
 			return
 		}
 		self.replyMessage.reply = ""
