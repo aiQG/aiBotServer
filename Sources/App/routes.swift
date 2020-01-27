@@ -4,7 +4,6 @@ import Vapor
 public func routes(_ router: Router) throws {
     
 	router.get { req -> String in
-		print("get\n")
         return  "It works!\(req)"
     }
     
@@ -22,7 +21,6 @@ public func routes(_ router: Router) throws {
 		}
 		if message != nil {
 			let aiMessage = AI(m: message!)
-			print(aiMessage.replyMessage)
 			return aiMessage.replyMessage
 		}
 		return AIMessage()
