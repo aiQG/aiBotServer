@@ -210,7 +210,7 @@ class AI {
 	
 	// 色图判断
 	func hentai() {
-		let ttt = "curl -X GET -G 'https://api.sightengine.com/1.0/check.json' -d 'models=nudity' -d 'api_user=1761246545' -d 'api_secret=5GGjxXwzvpS5cda898rq' -d 'url=https://dun.163.com/public/res/web/case/sexy_danger_1.jpg'"
+		let ttt = "curl -X GET -G \"https://api.sightengine.com/1.0/check.json\" -d \"models=nudity\" -d \"api_user=1761246545\" -d \"api_secret=5GGjxXwzvpS5cda898rq\" -d \"url=https://dun.163.com/public/res/web/case/sexy_danger_1.jpg\""
 			.split(separator: " ").map{String($0)}
 		self.replyMessage.reply = execCmds(arg: [String](ttt))
 		print(self.replyMessage.reply)
