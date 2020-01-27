@@ -34,8 +34,3 @@ public func routes(_ router: Router) throws {
     router.delete("todos", Todo.parameter, use: todoController.delete)
 }
 
-func gotPOSTMessage(req:Request) {
-	let reqString = "\(req)".split(separator: "\n")
-	
-	print(reqString)
-}
