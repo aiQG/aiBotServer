@@ -33,10 +33,9 @@ struct AIMessage: Content {
 class AI {
 	var message: JSONMessage!
 	var replyMessage = AIMessage()
-	var req: Request!
-	init(m: JSONMessage, r: Request) {
+	init(m: JSONMessage) {
 		self.message = m
-		self.req = r
+		// 判断群聊信息/私聊信息
 		switch self.message.message_type! {
 		case "private":
 			privateMessage()
@@ -49,7 +48,6 @@ class AI {
 	
 	func privateMessage() {
 		// 色图判断
-//			hentai()
 		if message.message!.contains("[CQ:image,file=")
 		&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
 			let url = message.message!.split(separator: "]").map { (sb) -> String in
@@ -61,21 +59,18 @@ class AI {
 			hentai(url: url[0])
 		}
 		
-		
-		
 		cmds()
 		if self.replyMessage.reply != nil {
 			return
 		}
+		
 		AICore()
 		return
 	}
 	
 	func groupMessage() {
 	
-		
-		
-		// 没被at则遍历信息每个字符
+		// 没被at则遍历信息
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
 			_ = message.raw_message!.map({ (c:Character) in
 				if c == "艹" || c == "草" {
@@ -100,6 +95,7 @@ class AI {
 				black🐰 += 1
 			}
 			
+			// 判断色图
 			if message.message!.contains("[CQ:image,file=")
 			&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
 				let url = message.message!.split(separator: "]").map { (sb) -> String in
@@ -110,7 +106,6 @@ class AI {
 				}
 				hentai(url: url[0])
 			}
-			
 			
 			return
 		}
@@ -212,8 +207,6 @@ class AI {
 	func execCmds(arg: [String]) -> String {
 		let task = Process()
 		let pipe = Pipe()
-//		var arguments = arg
-//		arguments.insert(bin, at: 0)
 		task.launchPath = "/usr/bin/env"
 		task.arguments = arg
 		task.standardOutput = pipe
@@ -246,6 +239,7 @@ class AI {
 			self.replyMessage.at_sender = true
 			self.replyMessage.reply = "\n色图的概率为 \(Float(rate)! * 100)%"
 			if Float(rate) ?? 0 >= 0.8 {
+				// TODO: 保存到服务器
 				self.replyMessage.reply! += "\n已保存到服务器"
 			}
 			return
@@ -253,6 +247,4 @@ class AI {
 		self.replyMessage.reply = ""
 		return
 	}
-	
-	
 }

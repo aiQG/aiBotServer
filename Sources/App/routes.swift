@@ -5,47 +5,6 @@ public func routes(_ router: Router) throws {
     
 	router.get { req -> String in
 		print("get\n")
-		//======================================
-			
-//		let sss = ImageRequest(models: "nudity", api_user: 1761246545, api_secret: "5GGjxXwzvpS5cda898rq", url: "")
-//		var data: String = String(data: try URLEncodedFormEncoder().encode(sss), encoding: .utf8)!
-//		data += "&url=https%3a%2f%2fdun.163.com%2fpublic%2fres%2fweb%2fcase%2fsexy_danger_1.jpg"
-//		print(data)
-//
-//		let res = try req.client().get("https://api.sightengine.com/1.0/check.json"+"?\(data)")//.wait()
-//		print(res)
-//
-//		res.map(to: ImageResult.self) { (x) -> ImageResult in
-//			try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
-//				print(m)
-//				return .ok
-//			}
-//			return ImageResult(status: "a", request: ImageResult.ReplayRequest(id: "a", timestamp: 1, operations: 1), nudity: ImageResult.NudityResult(raw: 1, safe: 1, partial: 1), media: ImageResult.MediaRequest(id: "a", uri: "a"), error: nil)
-//		}
-		
-				let sss = ImageRequest(models: "nudity", api_user: 1761246545, api_secret: "5GGjxXwzvpS5cda898rq", url: "")
-				let data = (try URLEncodedFormEncoder().encode(sss))
-				var dataStr: String = String(data: data, encoding: .utf8)!
-				dataStr += "&url=https%3a%2f%2fdun.163.com%2fpublic%2fres%2fweb%2fcase%2fsexy_danger_1.jpg"
-				print(dataStr)
-				
-				let res = try req.client().get("https://api.sightengine.com/1.0/check.json"+"?\(dataStr)")
-				
-				print(res)
-				print("===")
-				res.map(to: ImageResult.self) { (x) -> ImageResult in
-					print(x)
-					try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
-						print(m)
-						return .ok
-					}
-					return ImageResult(status: "a", request: ImageResult.ReplayRequest(id: "a", timestamp: 1, operations: 1), nudity: ImageResult.NudityResult(raw: 1, safe: 1, partial: 1), media: ImageResult.MediaRequest(id: "a", uri: "a"), error: nil)
-				}
-				
-				
-		
-		
-		//======================================
         return  "It works!\(req)"
     }
     
@@ -62,7 +21,7 @@ public func routes(_ router: Router) throws {
 			return .ok
 		}
 		if message != nil {
-			let aiMessage = AI(m: message!, r: req)
+			let aiMessage = AI(m: message!)
 			print(aiMessage.replyMessage)
 			return aiMessage.replyMessage
 		}
