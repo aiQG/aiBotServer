@@ -48,6 +48,9 @@ class AI {
 	}
 	
 	func privateMessage() {
+		// 色图判断
+			hentai()
+		
 		cmds()
 		if self.replyMessage.reply != nil {
 			return
@@ -57,8 +60,7 @@ class AI {
 	}
 	
 	func groupMessage() {
-		// 色图判断
-		hentai()
+	
 		
 		
 		// 没被at则遍历信息每个字符
@@ -212,7 +214,7 @@ class AI {
 		dataStr += "&url=https%3a%2f%2fdun.163.com%2fpublic%2fres%2fweb%2fcase%2fsexy_danger_1.jpg"
 		print(dataStr)
 		
-		guard let res = try? req.client().get("https://api.sightengine.com/1.0/check.json"+"?\(data)") else {
+		guard let res = try? req.client().get("https://api.sightengine.com/1.0/check.json"+"?\(dataStr)") else {
 			return
 		}
 		print(res)
