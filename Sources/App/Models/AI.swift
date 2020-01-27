@@ -49,7 +49,19 @@ class AI {
 	
 	func privateMessage() {
 		// 色图判断
-			hentai()
+//			hentai()
+		if message.message!.contains("[CQ:image,file=")
+		&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
+			let url = message.message!.split(separator: "]").map { (sb) -> String in
+				var x = sb
+				let range = x.range(of: ".jpg,url=")
+				x.removeSubrange(x.startIndex..<range!.upperBound)
+				return String(x)
+			}
+			hentai(url: url[0])
+		}
+		
+		
 		
 		cmds()
 		if self.replyMessage.reply != nil {
@@ -87,6 +99,18 @@ class AI {
 			if message.raw_message!.contains("[CQ:image,file=9628EC83AC4DA822149CE58859CF2F5D.jpg") {
 				black🐰 += 1
 			}
+			
+			if message.message!.contains("[CQ:image,file=")
+			&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
+				let url = message.message!.split(separator: "]").map { (sb) -> String in
+					var x = sb
+					let range = x.range(of: ".jpg,url=")
+					x.removeSubrange(x.startIndex..<range!.upperBound)
+					return String(x)
+				}
+				hentai(url: url[0])
+			}
+			
 			
 			return
 		}
@@ -186,7 +210,6 @@ class AI {
 
 	// dangerous founction
 	func execCmds(arg: [String]) -> String {
-		print(arg)
 		let task = Process()
 		let pipe = Pipe()
 //		var arguments = arg
@@ -203,57 +226,28 @@ class AI {
 	}
 	
 	// 色图判断
-	func hentai() {
-		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=https://dun.163.com/public/res/web/case/sexy_danger_1.jpg"
+	func hentai(url: String) {
+		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=\(url)"
 			.split(separator: " ").map{String($0)}
 		self.replyMessage.reply = execCmds(arg: [String](ttt))
 		
-		self.replyMessage.reply = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
-		self.replyMessage.reply?.removeLast(2) // remove "\n" and ","
-		
-		print(self.replyMessage.reply)
-//		let sss = ImageRequest(models: "nudity", api_user: 1761246545, api_secret: "5GGjxXwzvpS5cda898rq", url: "")
-//		guard let data = (try? URLEncodedFormEncoder().encode(sss)) else {
-//			return
-//		}
-//		var dataStr: String = String(data: data, encoding: .utf8)!
-//		dataStr += "&url=https%3a%2f%2fdun.163.com%2fpublic%2fres%2fweb%2fcase%2fsexy_danger_1.jpg"
-//		print(dataStr)
-//
-//		guard let res = try? req.client().get("https://api.sightengine.com/1.0/check.json"+"?\(dataStr)") else {
-//			return
-//		}
-//		print(res)
-//		print("===")
-//		var testres: Response?
-//		var hentaiImageResult: ImageResult?
-//		do{
-//			testres = try res.wait()
-//			try testres!.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
-//				hentaiImageResult = m
-//				print(hentaiImageResult!)
-//				self.replyMessage.reply = hentaiImageResult!.request.id
-//
-//				return .ok
-//			}
-//		}catch{
-//			print("Error")
-//		}
-		
-		
-		//		res.map(to: HTTPStatus.self) { (x)  in
-//			print(x)
-//			try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
-//				hentaiImageResult = m
-//				print(hentaiImageResult)
-//				self.replyMessage.reply = hentaiImageResult!.request.id
-//				return .ok
-//			}
-//			return .ok//ImageResult(status: "a", request: ImageResult.ReplayRequest(id: "a", timestamp: 1, operations: 1), nudity: ImageResult.NudityResult(raw: 1, safe: 1, partial: 1), media: ImageResult.MediaRequest(id: "a", uri: "a"), error: nil)
-//		}
-		
-		print("Func end")
-		
+		var status = String(self.replyMessage.reply!.split(separator: ":")[1].split(separator: " ").first!)
+		status.removeLast(3)
+		status.removeFirst()
+		if status == "success"{
+			self.replyMessage.reply = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
+			self.replyMessage.reply?.removeLast(2) // remove "\n" and ","
+			self.replyMessage.reply = "\n这张图是色图的概率为 \(String(describing: self.replyMessage.reply))"
+			self.replyMessage.at_sender = true
+			if Float(self.replyMessage.reply ?? "0")! <= 0.5 {
+				self.replyMessage.reply = ""
+				self.replyMessage.at_sender = false
+				return
+			}
+			return
+		}
+		self.replyMessage.reply = ""
+		return
 	}
 	
 	
