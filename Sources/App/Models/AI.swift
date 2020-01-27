@@ -210,7 +210,7 @@ class AI {
 		}
 		var dataStr: String = String(data: data, encoding: .utf8)!
 		dataStr += "&url=https%3a%2f%2fdun.163.com%2fpublic%2fres%2fweb%2fcase%2fsexy_danger_1.jpg"
-		print(data)
+		print(dataStr)
 		
 		guard let res = try? req.client().get("https://api.sightengine.com/1.0/check.json"+"?\(data)") else {
 			return
