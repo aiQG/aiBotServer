@@ -232,13 +232,16 @@ class AI {
 		self.replyMessage.reply = execCmds(arg: [String](ttt))
 		
 		var status = String(self.replyMessage.reply!.split(separator: ":")[1].split(separator: " ").first!)
-		print(status)
 		status.removeLast(3)
 		status.removeFirst()
 		if status == "success"{
+			print("A \(self.replyMessage.reply)")
 			self.replyMessage.reply = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
+			print("B \(self.replyMessage.reply)")
 			self.replyMessage.reply?.removeLast(2) // remove "\n" and ","
+			print("C \(self.replyMessage.reply)")
 			self.replyMessage.reply = "\n这张图是色图的概率为 \(String(describing: self.replyMessage.reply))"
+			print("D \(self.replyMessage.reply)")
 			self.replyMessage.at_sender = true
 			if Float(self.replyMessage.reply ?? "0")! <= 0.5 {
 				self.replyMessage.reply = ""
