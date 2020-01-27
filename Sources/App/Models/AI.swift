@@ -218,14 +218,16 @@ class AI {
 			return
 		}
 		print(res)
-print("===")
-		res.map(to: ImageResult.self) { (x) -> ImageResult in
+		print("===")
+		var hentaiImageResult: ImageResult?
+		res.map(to: HTTPStatus.self) { (x)  in
 			print(x)
 			try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
-				print(m)
+				hentaiImageResult = m
+				print(hentaiImageResult)
 				return .ok
 			}
-			return ImageResult(status: "a", request: ImageResult.ReplayRequest(id: "a", timestamp: 1, operations: 1), nudity: ImageResult.NudityResult(raw: 1, safe: 1, partial: 1), media: ImageResult.MediaRequest(id: "a", uri: "a"), error: nil)
+			return .ok//ImageResult(status: "a", request: ImageResult.ReplayRequest(id: "a", timestamp: 1, operations: 1), nudity: ImageResult.NudityResult(raw: 1, safe: 1, partial: 1), media: ImageResult.MediaRequest(id: "a", uri: "a"), error: nil)
 		}
 		
 		
