@@ -217,8 +217,8 @@ class AI {
 		}
 		print(res)
 
-		_ = res.map(to: ImageResult.self) { (x) -> ImageResult in
-			_ = try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
+		res.map(to: ImageResult.self) { (x) -> ImageResult in
+			try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
 				print(m)
 				return .ok
 			}

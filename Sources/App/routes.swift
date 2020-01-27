@@ -15,8 +15,8 @@ public func routes(_ router: Router) throws {
 		let res = try req.client().get("https://api.sightengine.com/1.0/check.json"+"?\(data)")//.wait()
 		print(res)
 
-		_ = res.map(to: ImageResult.self) { (x) -> ImageResult in
-			_ = try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
+		res.map(to: ImageResult.self) { (x) -> ImageResult in
+			try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
 				print(m)
 				return .ok
 			}
