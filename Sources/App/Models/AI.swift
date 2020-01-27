@@ -199,40 +199,48 @@ class AI {
 		let data = pipe.fileHandleForReading.readDataToEndOfFile()
 		let output = String(data: data, encoding: .utf8) ?? ""
 		print(output)
+		do{
+			print(try JSONEncoder().encode(output))
+		}catch{
+			print("Error")
+		}
+		
 		return output
 	}
 	
 	// 色图判断
 	func hentai() {
-		
-		
-		let sss = ImageRequest(models: "nudity", api_user: 1761246545, api_secret: "5GGjxXwzvpS5cda898rq", url: "")
-		guard let data = (try? URLEncodedFormEncoder().encode(sss)) else {
-			return
-		}
-		var dataStr: String = String(data: data, encoding: .utf8)!
-		dataStr += "&url=https%3a%2f%2fdun.163.com%2fpublic%2fres%2fweb%2fcase%2fsexy_danger_1.jpg"
-		print(dataStr)
-		
-		guard let res = try? req.client().get("https://api.sightengine.com/1.0/check.json"+"?\(dataStr)") else {
-			return
-		}
-		print(res)
-		print("===")
-		var testres: Response?
-		var hentaiImageResult: ImageResult?
-		do{
-			testres = try res.wait()
-			try testres!.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
-				hentaiImageResult = m
-				print(hentaiImageResult!)
-				self.replyMessage.reply = hentaiImageResult!.request.id
-				
-				return .ok
-			}
-		}catch{
-			print("Error")
-		}
+		let ttt = "curl -X GET -G 'https://api.sightengine.com/1.0/check.json' -d 'models=nudity' -d 'api_user=1761246545' -d 'api_secret=5GGjxXwzvpS5cda898rq' -d 'url=https://dun.163.com/public/res/web/case/sexy_danger_1.jpg'"
+			.split(separator: " ").map{String($0)}
+		self.replyMessage.reply = execCmds(arg: [String](ttt))
+		print(self.replyMessage.reply)
+//		let sss = ImageRequest(models: "nudity", api_user: 1761246545, api_secret: "5GGjxXwzvpS5cda898rq", url: "")
+//		guard let data = (try? URLEncodedFormEncoder().encode(sss)) else {
+//			return
+//		}
+//		var dataStr: String = String(data: data, encoding: .utf8)!
+//		dataStr += "&url=https%3a%2f%2fdun.163.com%2fpublic%2fres%2fweb%2fcase%2fsexy_danger_1.jpg"
+//		print(dataStr)
+//
+//		guard let res = try? req.client().get("https://api.sightengine.com/1.0/check.json"+"?\(dataStr)") else {
+//			return
+//		}
+//		print(res)
+//		print("===")
+//		var testres: Response?
+//		var hentaiImageResult: ImageResult?
+//		do{
+//			testres = try res.wait()
+//			try testres!.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
+//				hentaiImageResult = m
+//				print(hentaiImageResult!)
+//				self.replyMessage.reply = hentaiImageResult!.request.id
+//
+//				return .ok
+//			}
+//		}catch{
+//			print("Error")
+//		}
 		
 		
 		//		res.map(to: HTTPStatus.self) { (x)  in
