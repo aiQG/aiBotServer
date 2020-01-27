@@ -216,8 +216,9 @@ class AI {
 			return
 		}
 		print(res)
-
+print("===")
 		res.map(to: ImageResult.self) { (x) -> ImageResult in
+			print(x)
 			try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
 				print(m)
 				return .ok
