@@ -8,7 +8,7 @@
 import Vapor
 
 // 统计
-var 艹timies: UInt32 = 0
+var 艹times: UInt32 = 0
 var static🐰: UInt32 = 0
 var dynamic🐰ear: UInt32 = 0
 var dynamic🐰face: UInt32 = 0
@@ -60,7 +60,7 @@ class AI {
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
 			message.raw_message!.map({ (c:Character) in
 				if c == "艹" || c == "草" {
-					艹timies += 1
+					艹times += 1
 				}
 			})
 			
@@ -126,7 +126,7 @@ class AI {
 			
 		case "艹", "草":
 			self.replyMessage.reply = "\n" +
-			"\"艹\"/\"草\"一共出现了 \(艹timies) 次"
+			"\"艹\"/\"草\"一共出现了 \(艹times) 次"
 			return
 			
 		case "兔子":
@@ -141,15 +141,19 @@ class AI {
 			
 		case "github":
 			self.replyMessage.reply = "\naiBot项目连接: github.com/aiQG/aiBotServer"
+			return
+			
 		case "echo":
-            var wordArray = self.message.raw_message!.split(separator: "");
-            wordArray = wordArray.dropFirst(4);
+			var wordArray: [String] = self.message.raw_message!.map{String($0)}
             var word = "\n";
-            for(int i = 0;i<wordArray.count;i++){
-                word+=("".join(wordArray))+"\n";
-                wordArray.dropFirst(1);
-            }
+			for _ in 1..<wordArray.count {
+				wordArray.remove(at: 0)
+				word += wordArray.reduce(into: ""){$0+=$1}
+				word += "\n"
+			}
             self.replyMessage.reply = word;
+			return
+			
         default:
 			break
 		}
