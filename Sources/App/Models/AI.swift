@@ -199,12 +199,6 @@ class AI {
 		let data = pipe.fileHandleForReading.readDataToEndOfFile()
 		let output = String(data: data, encoding: .utf8) ?? ""
 		print(output)
-		do{
-			print(try JSONEncoder().encode(output))
-		}catch{
-			print("Error")
-		}
-		
 		return output
 	}
 	
@@ -213,6 +207,10 @@ class AI {
 		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=https://dun.163.com/public/res/web/case/sexy_danger_1.jpg"
 			.split(separator: " ").map{String($0)}
 		self.replyMessage.reply = execCmds(arg: [String](ttt))
+		
+		self.replyMessage.reply = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
+		self.replyMessage.reply?.removeLast(2) // remove "\n" and ","
+		
 		print(self.replyMessage.reply)
 //		let sss = ImageRequest(models: "nudity", api_user: 1761246545, api_secret: "5GGjxXwzvpS5cda898rq", url: "")
 //		guard let data = (try? URLEncodedFormEncoder().encode(sss)) else {
