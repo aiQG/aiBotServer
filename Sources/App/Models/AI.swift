@@ -8,7 +8,7 @@
 import Vapor
 
 // 统计
-var 艹timies: UInt32 = 0
+var 艹times: UInt32 = 0
 var static🐰: UInt32 = 0
 var dynamic🐰ear: UInt32 = 0
 var dynamic🐰face: UInt32 = 0
@@ -60,7 +60,7 @@ class AI {
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
 			message.raw_message!.map({ (c:Character) in
 				if c == "艹" || c == "草" {
-					艹timies += 1
+					艹times += 1
 				}
 			})
 			
@@ -121,12 +121,13 @@ class AI {
 			"兔子: 返回出现的兔子表情个数\n" +
 			"dangerous: 执行命令\n" +
 			"surprise: 一个惊喜！\n" +
-			"GitHub: 返回aiBot的项目地址" 
+			"GitHub: 返回aiBot的项目地址\n" +
+      "echo: 回声"
 			return
 			
 		case "艹", "草":
 			self.replyMessage.reply = "\n" +
-			"\"艹\"/\"草\"一共出现了 \(艹timies) 次"
+			"\"艹\"/\"草\"一共出现了 \(艹times) 次"
 			return
 			
 		case "兔子":
@@ -148,8 +149,20 @@ class AI {
 			self.replyMessage.ban_duration = UInt32.random(in:1...30)
 			self.replyMessage.reply = "\nAre you surprised?"
 			return
-
-		default:
+      
+		case "echo":
+			var wordArray: [String] = self.message.raw_message!.map{String($0)}
+            var word = "\n";
+			wordArray.removeFirst(4)
+			for _ in 1..<wordArray.count {
+				wordArray.remove(at: 0)
+				word += wordArray.reduce(into: ""){$0+=$1}
+				word += "\n"
+			}
+            self.replyMessage.reply = word;
+			return
+			
+        default:
 			break
 		}
 	}
