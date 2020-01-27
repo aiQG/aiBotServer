@@ -244,7 +244,10 @@ class AI {
 				return
 			}
 			self.replyMessage.at_sender = true
-			self.replyMessage.reply = "\n这张图是色图的概率为 \(rate)"
+			self.replyMessage.reply = "\n色图的概率为 \(Float(rate)! * 100)%"
+			if Float(rate) ?? 0 >= 0.8 {
+				self.replyMessage.reply! += "\n已保存到服务器"
+			}
 			return
 		}
 		self.replyMessage.reply = ""
