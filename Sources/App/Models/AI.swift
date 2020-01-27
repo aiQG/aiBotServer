@@ -219,17 +219,32 @@ class AI {
 		}
 		print(res)
 		print("===")
+		var testres: Response?
 		var hentaiImageResult: ImageResult?
-		res.map(to: HTTPStatus.self) { (x)  in
-			print(x)
-			try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
+		do{
+			testres = try res.wait()
+			try testres!.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
 				hentaiImageResult = m
-				print(hentaiImageResult)
+				print(hentaiImageResult!)
 				self.replyMessage.reply = hentaiImageResult!.request.id
+				
 				return .ok
 			}
-			return .ok//ImageResult(status: "a", request: ImageResult.ReplayRequest(id: "a", timestamp: 1, operations: 1), nudity: ImageResult.NudityResult(raw: 1, safe: 1, partial: 1), media: ImageResult.MediaRequest(id: "a", uri: "a"), error: nil)
+		}catch{
+			print("Error")
 		}
+		
+		
+		//		res.map(to: HTTPStatus.self) { (x)  in
+//			print(x)
+//			try x.content.decode(ImageResult.self).map(to: HTTPStatus.self){ m in
+//				hentaiImageResult = m
+//				print(hentaiImageResult)
+//				self.replyMessage.reply = hentaiImageResult!.request.id
+//				return .ok
+//			}
+//			return .ok//ImageResult(status: "a", request: ImageResult.ReplayRequest(id: "a", timestamp: 1, operations: 1), nudity: ImageResult.NudityResult(raw: 1, safe: 1, partial: 1), media: ImageResult.MediaRequest(id: "a", uri: "a"), error: nil)
+//		}
 		
 		print("Func end")
 		
