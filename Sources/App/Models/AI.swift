@@ -230,7 +230,7 @@ class AI {
 			return .ok//ImageResult(status: "a", request: ImageResult.ReplayRequest(id: "a", timestamp: 1, operations: 1), nudity: ImageResult.NudityResult(raw: 1, safe: 1, partial: 1), media: ImageResult.MediaRequest(id: "a", uri: "a"), error: nil)
 		}
 		
-		
+		print("Func end")
 		
 	}
 	
