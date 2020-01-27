@@ -232,6 +232,7 @@ class AI {
 		self.replyMessage.reply = execCmds(arg: [String](ttt))
 		
 		var status = String(self.replyMessage.reply!.split(separator: ":")[1].split(separator: " ").first!)
+		print(status)
 		status.removeLast(3)
 		status.removeFirst()
 		if status == "success"{
