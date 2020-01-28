@@ -250,10 +250,11 @@ class AI {
 			if Float(rate) ?? 0 >= 0.50 {
 				// TODO: 保存到服务器
 				self.replyMessage.reply! += "\n已保存到服务器"
-			} else if status == "failure" {
-				self.replyMessage.reply = "\n图片上传失败"
 			}
 			return
+		} else if status == "failure" {
+			self.replyMessage.reply = "\n图片上传失败"
+			return 
 		}
 		
 		self.replyMessage.reply = ""
