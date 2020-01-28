@@ -52,8 +52,8 @@ class AI {
 		&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
 			let url = message.message!.split(separator: "]").map { (sb) -> String in
 				var x = sb
-				let range = x.range(of: ".jpg,url=")
-				print("F\(x)") 
+				let range = x.range(of: ".jpg,url=") ?? x.range(of: ".png,url=")
+				print("F\(x)")
 				x.removeSubrange(x.startIndex..<range!.upperBound)
 				print("G\(x)")
 				return String(x)
