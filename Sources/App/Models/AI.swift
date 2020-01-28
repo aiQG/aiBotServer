@@ -207,6 +207,7 @@ class AI {
 
 	// dangerous founction
 	func execCmds(arg: [String]) -> String {
+		print(arg)
 		let task = Process()
 		let pipe = Pipe()
 		task.launchPath = "/usr/bin/env"
