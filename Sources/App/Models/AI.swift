@@ -49,7 +49,7 @@ class AI {
 	func privateMessage() {
 		// 色图判断
 		if message.message!.contains("[CQ:image,file=")
-		&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
+			&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
 			let url = message.message!.split(separator: "]").map { (sb) -> String in
 				var x = sb
 				let range = x.range(of: ".jpg,url=") ?? x.range(of: ".png,url=")
@@ -69,7 +69,7 @@ class AI {
 	}
 	
 	func groupMessage() {
-	
+		
 		// 没被at则遍历信息
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
 			_ = message.raw_message!.map({ (c:Character) in
@@ -104,7 +104,7 @@ class AI {
 			&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
 			let url = message.message!.split(separator: "]").map { (sb) -> String in
 				var x = sb
-				let range = x.range(of: ".jpg,url=")
+				let range = x.range(of: ".jpg,url=") ?? x.range(of: ".png,url=")
 				x.removeSubrange(x.startIndex..<range!.upperBound)
 				return String(x)
 			}
@@ -137,18 +137,18 @@ class AI {
 		case "dangerous":
 			self.replyMessage.reply = "本功能被禁用(写死了)"
 			//	execCmds(arg: [String](cmds[1...]))
-				//execCmds(bin: "echo", arg: [String](cmds[1...]))
+			//execCmds(bin: "echo", arg: [String](cmds[1...]))
 			return
 			
 		case "help":
 			self.replyMessage.reply = "\n" +
-			"aiBot 支持命令:\n" +
-			"help: 显示此帮助\n" +
-			"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
-			"兔子: 返回出现的兔子表情个数\n" +
-			"dangerous: 执行命令\n" +
-			"GitHub: 返回aiBot的项目地址\n" +
-            "echo: 回声\n" +
+				"aiBot 支持命令:\n" +
+				"help: 显示此帮助\n" +
+				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
+				"兔子: 返回出现的兔子表情个数\n" +
+				"dangerous: 执行命令\n" +
+				"GitHub: 返回aiBot的项目地址\n" +
+				"echo: 回声\n" +
 			"[图片]: 判断图片H的概率"
 			return
 			
@@ -159,11 +159,11 @@ class AI {
 			
 		case "兔子":
 			self.replyMessage.reply = "\n" +
-			"static🐰 = \(static🐰)\n" +
-			"dynamic🐰ear = \(dynamic🐰ear)\n" +
-			"dynamic🐰face = \(dynamic🐰face)\n" +
-			"smoke🐰 = \(smoke🐰)\n" +
-			"black🐰 = \(black🐰)\n" +
+				"static🐰 = \(static🐰)\n" +
+				"dynamic🐰ear = \(dynamic🐰ear)\n" +
+				"dynamic🐰face = \(dynamic🐰face)\n" +
+				"smoke🐰 = \(smoke🐰)\n" +
+				"black🐰 = \(black🐰)\n" +
 			"total = \(static🐰 + dynamic🐰ear + dynamic🐰face + smoke🐰 + black🐰)"
 			return
 			
@@ -173,17 +173,17 @@ class AI {
 			
 		case "echo":
 			var wordArray: [String] = self.message.raw_message!.map{String($0)}
-            var word = "\n";
+			var word = "\n";
 			wordArray.removeFirst(4)
 			for _ in 1..<wordArray.count {
 				wordArray.remove(at: 0)
 				word += wordArray.reduce(into: ""){$0+=$1}
 				word += "\n"
 			}
-            self.replyMessage.reply = word;
+			self.replyMessage.reply = word;
 			return
 			
-        default:
+		default:
 			break
 		}
 	}
@@ -191,20 +191,20 @@ class AI {
 	private func AICore() {
 		// 估价上亿的AI核心代码
 		self.replyMessage.reply = ""
-//			self.message.raw_message!.reduce(into: "") { (res, c) in
-//			switch c {
-//			case "?", "？":
-//				res! += "!"
-//			case "吗", "呢":
-//				res! += ""
-//			default:
-//				res! += String(c)
-//			}
-//		}
+		//			self.message.raw_message!.reduce(into: "") { (res, c) in
+		//			switch c {
+		//			case "?", "？":
+		//				res! += "!"
+		//			case "吗", "呢":
+		//				res! += ""
+		//			default:
+		//				res! += String(c)
+		//			}
+		//		}
 		
 		return
 	}
-
+	
 	// dangerous founction
 	func execCmds(arg: [String]) -> String {
 		let task = Process()
