@@ -95,19 +95,20 @@ class AI {
 				black🐰 += 1
 			}
 			
-			// 判断色图
-			if message.message!.contains("[CQ:image,file=")
-			&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
-				let url = message.message!.split(separator: "]").map { (sb) -> String in
-					var x = sb
-					let range = x.range(of: ".jpg,url=")
-					x.removeSubrange(x.startIndex..<range!.upperBound)
-					return String(x)
-				}
-				hentai(url: url[0])
-			}
 			
 			return
+		}
+		
+		// 判断色图
+		if message.message!.contains("[CQ:image,file=")
+			&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
+			let url = message.message!.split(separator: "]").map { (sb) -> String in
+				var x = sb
+				let range = x.range(of: ".jpg,url=")
+				x.removeSubrange(x.startIndex..<range!.upperBound)
+				return String(x)
+			}
+			hentai(url: url[0])
 		}
 		
 		// 被at先去掉"[CQ:at,qq=2550765853]"
@@ -147,7 +148,8 @@ class AI {
 			"兔子: 返回出现的兔子表情个数\n" +
 			"dangerous: 执行命令\n" +
 			"GitHub: 返回aiBot的项目地址\n" +
-            "echo: 回声"
+            "echo: 回声\n" +
+			"[图片]: 判断图片H的概率"
 			return
 			
 		case "艹", "草":
@@ -231,14 +233,14 @@ class AI {
 			var rate = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
 			rate.removeLast(2) // remove "\n" and ","
 
-			if Float(rate) ?? 0 <= 0.5 {
+			if Float(rate) ?? 0 <= 0.01 {
 				self.replyMessage.reply = ""
 				self.replyMessage.at_sender = false
 				return
 			}
 			self.replyMessage.at_sender = true
 			self.replyMessage.reply = "\n色图的概率为 \(Float(rate)! * 100)%"
-			if Float(rate) ?? 0 >= 0.8 {
+			if Float(rate) ?? 0 >= 0.50 {
 				// TODO: 保存到服务器
 				self.replyMessage.reply! += "\n已保存到服务器"
 			}
