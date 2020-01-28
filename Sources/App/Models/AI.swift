@@ -233,8 +233,8 @@ class AI {
 			var rate = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
 			rate.removeLast(2) // remove "\n" and ","
 			if Float(rate) ?? 0 <= 0.01 {
-				self.replyMessage.reply = ""
-				self.replyMessage.at_sender = false
+				self.replyMessage.reply = "\n这不是色图"
+				self.replyMessage.at_sender = true
 				return
 			}
 			self.replyMessage.at_sender = true
