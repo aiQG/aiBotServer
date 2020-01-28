@@ -50,12 +50,16 @@ class AI {
 		// 色图判断
 		if message.message!.contains("[CQ:image,file=")
 			&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
-			let url = message.message!.split(separator: "]").map { (sb) -> String in
+			let urltemp = message.message!.split(separator: "]").map { (sb) -> String? in
 				var x = sb
 				let range = x.range(of: ".jpg,url=") ?? x.range(of: ".png,url=")
+				if range == nil {
+					return nil
+				}
 				x.removeSubrange(x.startIndex..<range!.upperBound)
 				return String(x)
 			}
+			let url = urltemp.compactMap{$0}
 			hentai(url: url[0])
 		}
 		
@@ -102,12 +106,16 @@ class AI {
 		// 判断色图
 		if message.message!.contains("[CQ:image,file=")
 			&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
-			let url = message.message!.split(separator: "]").map { (sb) -> String in
+			let urltemp = message.message!.split(separator: "]").map { (sb) -> String? in
 				var x = sb
 				let range = x.range(of: ".jpg,url=") ?? x.range(of: ".png,url=")
+				if range == nil {
+					return nil
+				}
 				x.removeSubrange(x.startIndex..<range!.upperBound)
 				return String(x)
 			}
+			let url = urltemp.compactMap{$0}
 			hentai(url: url[0])
 		}
 		
