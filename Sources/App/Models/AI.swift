@@ -53,9 +53,12 @@ class AI {
 			let url = message.message!.split(separator: "]").map { (sb) -> String in
 				var x = sb
 				let range = x.range(of: ".jpg,url=")
+				print("F\(x)")
 				x.removeSubrange(x.startIndex..<range!.upperBound)
+				print("G\(x)")
 				return String(x)
 			}
+			print("E\(url)")
 			hentai(url: url[0])
 		}
 		
