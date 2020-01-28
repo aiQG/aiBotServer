@@ -207,7 +207,7 @@ class AI {
 
 	// dangerous founction
 	func execCmds(arg: [String]) -> String {
-		print(arg)
+		print("D\(arg)")
 		let task = Process()
 		let pipe = Pipe()
 		task.launchPath = "/usr/bin/env"
@@ -223,17 +223,20 @@ class AI {
 	
 	// 色图判断
 	func hentai(url: String) {
+		print("DD\(url)")
 		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=\(url)"
 			.split(separator: " ").map{String($0)}
+		print("A\(ttt)")
 		self.replyMessage.reply = execCmds(arg: [String](ttt))
 		
 		var status = String(self.replyMessage.reply!.split(separator: ":")[1].split(separator: " ").first!)
 		status.removeLast(3)
 		status.removeFirst()
+		print("B\(status)")
 		if status == "success"{
 			var rate = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
 			rate.removeLast(2) // remove "\n" and ","
-
+			print("C\(rate)")
 			if Float(rate) ?? 0 <= 0.01 {
 				self.replyMessage.reply = ""
 				self.replyMessage.at_sender = false
