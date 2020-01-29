@@ -232,7 +232,10 @@ class AI {
 	func hentai(url: String) {
 		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=\(url)"
 			.split(separator: " ").map{String($0)}
-		self.replyMessage.reply = execCmds(arg: [String](ttt))
+		let retVal = execCmds(arg: [String](ttt))
+		self.replyMessage.reply = retVal
+		print(retVal.trimmingCharacters(in: .whitespacesAndNewlines))
+		
 		
 		var status = String(self.replyMessage.reply!.split(separator: ":")[1].split(separator: " ").first!)
 		status.removeLast(3)
@@ -254,10 +257,10 @@ class AI {
 			return
 		} else if status == "failure" {
 			self.replyMessage.reply = "\n图片上传失败"
-			return 
+			return
 		}
 		
-		self.replyMessage.reply = ""
+		self.replyMessage.reply = "\n发生了意料之外的事,结果返回:\(retVal)"
 		return
 	}
 }
