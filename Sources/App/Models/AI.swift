@@ -234,7 +234,7 @@ class AI {
 			.split(separator: " ").map{String($0)}
 		let retVal = execCmds(arg: [String](ttt))
 		self.replyMessage.reply = retVal
-		print(retVal.trimmingCharacters(in: .whitespacesAndNewlines))
+		print(retVal.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: ""))
 		
 		
 		var status = String(self.replyMessage.reply!.split(separator: ":")[1].split(separator: " ").first!)
