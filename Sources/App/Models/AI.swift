@@ -46,6 +46,63 @@ class AI {
 		}
 	}
 	
+	//处理指令
+	private func cmds() {
+		let cmds = self.message.raw_message!.split(separator: " ").map{ String($0) }
+		
+		switch cmds.first?.lowercased() {
+		case "run":
+			self.replyMessage.reply = "\naiBot: permission denied"
+			//	execCmds(arg: [String](cmds[1...]))
+			return
+			
+		case "help":
+			self.replyMessage.reply = "\n" +
+				"aiBot 支持命令:\n" +
+				"help: 显示此帮助\n" +
+				"兔子: 返回出现的兔子表情个数\n" +
+				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
+				"GitHub: 返回aiBot的项目地址\n" +
+				"echo: \"回声\"\n" +
+				"[图片]: 判断图片H的概率"
+			return
+			
+		case "艹", "草":
+			self.replyMessage.reply = "\n" +
+			"\"艹\"/\"草\"一共出现了 \(艹times) 次"
+			return
+			
+		case "兔子":
+			self.replyMessage.reply = "\n" +
+				"static🐰 = \(static🐰)\n" +
+				"dynamic🐰ear = \(dynamic🐰ear)\n" +
+				"dynamic🐰face = \(dynamic🐰face)\n" +
+				"smoke🐰 = \(smoke🐰)\n" +
+				"black🐰 = \(black🐰)\n" +
+			"total = \(static🐰 + dynamic🐰ear + dynamic🐰face + smoke🐰 + black🐰)"
+			return
+			
+		case "github":
+			self.replyMessage.reply = "\naiBot项目连接: github.com/aiQG/aiBotServer"
+			return
+			
+		case "echo":
+			var wordArray: [String] = self.message.raw_message!.map{String($0)}
+			var word = "\n";
+			wordArray.removeFirst(4)
+			for _ in 1..<wordArray.count {
+				wordArray.remove(at: 0)
+				word += wordArray.reduce(into: ""){$0+=$1}
+				word += "\n"
+			}
+			self.replyMessage.reply = word;
+			return
+			
+		default:
+			break
+		}
+	}
+	
 	func privateMessage() {
 		// 色图判断
 		if message.message!.contains("[CQ:image,file=")
@@ -98,8 +155,7 @@ class AI {
 			if message.raw_message!.contains("[CQ:image,file=9628EC83AC4DA822149CE58859CF2F5D.jpg") {
 				black🐰 += 1
 			}
-			
-			
+
 			return
 		}
 		
@@ -116,10 +172,10 @@ class AI {
 				return String(x)
 			}
 			let url = urltemp.compactMap{$0}
-			hentai(url: url[0])
+			hentai(url: url[0]) // 只判断第一张图
 		}
 		
-		// 被at先去掉"[CQ:at,qq=2550765853]"
+		// 被at先去掉"[CQ:at,qq=*********]"
 		let strStart = self.message.raw_message!
 			.index(self.message.raw_message!.startIndex, offsetBy: 0)
 		let strEnd = self.message.raw_message!
@@ -134,66 +190,6 @@ class AI {
 		
 		AICore()
 		return
-	}
-	
-	
-	//处理cmd
-	private func cmds() {
-		let cmds = self.message.raw_message!.split(separator: " ").map{ String($0) }
-		
-		switch cmds.first?.lowercased() {
-		case "dangerous":
-			self.replyMessage.reply = "本功能被禁用(写死了)"
-			//	execCmds(arg: [String](cmds[1...]))
-			//execCmds(bin: "echo", arg: [String](cmds[1...]))
-			return
-			
-		case "help":
-			self.replyMessage.reply = "\n" +
-				"aiBot 支持命令:\n" +
-				"help: 显示此帮助\n" +
-				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
-				"兔子: 返回出现的兔子表情个数\n" +
-				"dangerous: 执行命令\n" +
-				"GitHub: 返回aiBot的项目地址\n" +
-				"echo: 回声\n" +
-			"[图片]: 判断图片H的概率"
-			return
-			
-		case "艹", "草":
-			self.replyMessage.reply = "\n" +
-			"\"艹\"/\"草\"一共出现了 \(艹times) 次"
-			return
-			
-		case "兔子":
-			self.replyMessage.reply = "\n" +
-				"static🐰 = \(static🐰)\n" +
-				"dynamic🐰ear = \(dynamic🐰ear)\n" +
-				"dynamic🐰face = \(dynamic🐰face)\n" +
-				"smoke🐰 = \(smoke🐰)\n" +
-				"black🐰 = \(black🐰)\n" +
-			"total = \(static🐰 + dynamic🐰ear + dynamic🐰face + smoke🐰 + black🐰)"
-			return
-			
-		case "github":
-			self.replyMessage.reply = "\naiBot项目连接: github.com/aiQG/aiBotServer"
-			return
-			
-		case "echo":
-			var wordArray: [String] = self.message.raw_message!.map{String($0)}
-			var word = "\n";
-			wordArray.removeFirst(4)
-			for _ in 1..<wordArray.count {
-				wordArray.remove(at: 0)
-				word += wordArray.reduce(into: ""){$0+=$1}
-				word += "\n"
-			}
-			self.replyMessage.reply = word;
-			return
-			
-		default:
-			break
-		}
 	}
 	
 	private func AICore() {
@@ -213,7 +209,7 @@ class AI {
 		return
 	}
 	
-	// dangerous founction
+	// 直接执行命令(DANGER!)
 	func execCmds(arg: [String]) -> String {
 		let task = Process()
 		let pipe = Pipe()
@@ -224,7 +220,7 @@ class AI {
 		task.waitUntilExit()
 		let data = pipe.fileHandleForReading.readDataToEndOfFile()
 		let output = String(data: data, encoding: .utf8) ?? ""
-		print(output)
+//		print(output)
 		return output
 	}
 	
@@ -234,8 +230,6 @@ class AI {
 			.split(separator: " ").map{String($0)}
 		let retVal = execCmds(arg: [String](ttt))
 		self.replyMessage.reply = retVal
-		print(retVal.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "\n", with: ""))
-		
 		
 		var status = String(self.replyMessage.reply!.split(separator: ":")[1].split(separator: " ").first!)
 		status.removeLast(3)
