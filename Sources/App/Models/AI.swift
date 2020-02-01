@@ -105,19 +105,15 @@ class AI {
 	
 	func privateMessage() {
 		// 色图判断
-		if message.message!.contains("[CQ:image,file=")
-			&& (message.message!.contains(".jpg,url=") || message.message!.contains(".png,url=")) {
-			let urltemp = message.message!.split(separator: "]").map { (sb) -> String? in
-				var x = sb
-				let range = x.range(of: ".jpg,url=") ?? x.range(of: ".png,url=")
-				if range == nil {
-					return nil
-				}
-				x.removeSubrange(x.startIndex..<range!.upperBound)
-				return String(x)
+		let CQImageRange = message.message!
+			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]", options: .regularExpression)
+		if CQImageRange != nil {
+			let urlRange = message.message![CQImageRange!]
+				.range(of: "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]", options: .regularExpression)
+			if urlRange != nil {
+				let url = message.message![urlRange!]
+				hentai(url: String(url))
 			}
-			let url = urltemp.compactMap{$0}
-			hentai(url: url[0])
 		}
 		
 		cmds()
