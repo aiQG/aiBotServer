@@ -172,7 +172,7 @@ class AI {
 		// 被at先去掉所有的"[CQ:at,qq=*********]"
 		_ = self.message.raw_message!
 			.replacingOccurrences(of: "[CQ:at,qq=\(message.self_id ?? 0)]", with: "")
-		
+		print(self.message.raw_message)
 		// 处理cmd
 		cmds()
 		if self.replyMessage.reply != nil{
