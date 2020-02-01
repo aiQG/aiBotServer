@@ -175,12 +175,9 @@ class AI {
 			hentai(url: url[0]) // 只判断第一张图
 		}
 		
-		// 被at先去掉"[CQ:at,qq=*********]"
-		let strStart = self.message.raw_message!
-			.index(self.message.raw_message!.startIndex, offsetBy: 0)
-		let strEnd = self.message.raw_message!
-			.index(self.message.raw_message!.startIndex, offsetBy: "[CQ:at,qq=\(message.self_id ?? 0)]".count-1)
-		self.message.raw_message!.replaceSubrange(strStart...strEnd, with: "")
+		// 被at先去掉所有的"[CQ:at,qq=*********]"
+		_ = self.message.raw_message!
+			.replacingOccurrences(of: "[CQ:at,qq=\(message.self_id ?? 0)]", with: "")
 		
 		// 处理cmd
 		cmds()
