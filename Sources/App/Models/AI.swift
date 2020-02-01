@@ -52,7 +52,7 @@ class AI {
 		
 		switch cmds.first?.lowercased() {
 		case "run":
-			self.replyMessage.reply = "\naiBot: permission denied"
+			self.replyMessage.reply = "\nrun: permission denied"
 			//	execCmds(arg: [String](cmds[1...]))
 			return
 			
