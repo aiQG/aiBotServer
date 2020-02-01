@@ -219,6 +219,7 @@ class AI {
 	func hentai(url: String) {
 		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=\(url)"
 			.split(separator: " ").map{String($0)}
+		print(ttt)
 		let retVal = execCmds(arg: [String](ttt))
 		self.replyMessage.reply = retVal
 		
