@@ -66,8 +66,7 @@ class AI {
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
 				"GitHub: 返回aiBot的项目地址\n" +
 				"echo: \"回声\"\n" +
-				"[图片]: 判断图片H的概率\n" +
-      "surprise: 一个惊喜！\n"
+				"[图片]: 判断图片H的概率"
 			return
 			
 		case "艹", "草":
@@ -103,12 +102,12 @@ class AI {
 			self.replyMessage.reply = word;
 			return
 			
-    case "surprise":
-			self.replyMessage.ban = true
-			
-			self.replyMessage.reply = "\nAre you surprised?"
-			print(self.replyMessage)
-			return
+			// 等待测试环境
+//    case "surprise":
+//			self.replyMessage.ban = true
+//			self.replyMessage.reply = "\nAre you surprised?"
+//			print(self.replyMessage)
+//			return
       
 		default:
 			break
@@ -237,7 +236,6 @@ class AI {
 	func hentai(url: String) {
 		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=\(url)"
 			.split(separator: " ").map{String($0)}
-		print(ttt)
 		let retVal = execCmds(arg: [String](ttt))
 		self.replyMessage.reply = retVal
 		
