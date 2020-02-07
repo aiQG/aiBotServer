@@ -105,7 +105,7 @@ class AI {
 			return
 			
 		case "fortune":
-			self.replyMessage.reply = "\n\(execCmds(arg: ["fortune", "-aw"]))"
+			self.replyMessage.reply = "\n" + execCmds(arg: ["fortune", "-a"])
 			
 			return
 			
@@ -235,7 +235,7 @@ class AI {
 		task.waitUntilExit()
 		let data = pipe.fileHandleForReading.readDataToEndOfFile()
 		let output = String(data: data, encoding: .utf8) ?? ""
-		print(output)
+//		print(output)
 		return output
 	}
 	
