@@ -156,13 +156,13 @@ class AI {
 			if message.raw_message!.contains("[CQ:image,file=16C212D34EC17F62F84430BB86748602.jpg") {
 				static🐰smoke += 1
 			}
-			if message.raw_message!.contains("[CQ:image,file=9628EC83AC4DA822149CE58859CF2F5D.jpg") {
+			if message.raw_message!.contains("[CQ:image,file=C39AD67D1B62EB681F6FB45B4967DCD8.jpg") {
 				static🐰black += 1
 			}
 			if message.raw_message!.contains("[CQ:image,file=89D910E941219E1B5DD7940ED4085C5F.jpg") {
 				static🐰large += 1
 			}
-			if message.raw_message!.contains("[CQ:image,file=463BE7344D443443D3B53B9E181B79DD.jpg") {
+			if message.raw_message!.contains("[CQ:image,file=46E10FDE4A72504A6DB116F9FBEF9FCA.jpg") {
 				static🐰idiot += 1
 			}
 			if message.raw_message!.contains("[CQ:image,file=B7B0DB87724D23B48134DAB2B4E25DA5.gif") {
