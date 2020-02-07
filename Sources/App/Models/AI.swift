@@ -10,12 +10,12 @@ import Vapor
 // 统计
 var 艹times: UInt32 = 0
 var static🐰origin: UInt32 = 0
-var dynamic🐰ear: UInt32 = 0
-var dynamic🐰face: UInt32 = 0
 var static🐰smoke: UInt32 = 0
 var static🐰black: UInt32 = 0
 var static🐰large: UInt32 = 0
 var static🐰idiot: UInt32 = 0
+var dynamic🐰ear: UInt32 = 0
+var dynamic🐰face: UInt32 = 0
 
 struct AIMessage: Content {
 	var reply: String? = nil			/// 回复内容
@@ -76,12 +76,14 @@ class AI {
 			
 		case "兔子":
 			self.replyMessage.reply = "\n" +
-				"static🐰 = \(static🐰origin)\n" +
-				"dynamic🐰ear = \(dynamic🐰ear)\n" +
+				"static🐰origin = \(static🐰origin)\n" +
+				"static🐰smoke = \(static🐰smoke)\n" +
+				"static🐰black = \(static🐰black)\n" +
+				"static🐰large = \(static🐰large)\n" +
+				"static🐰idiot = \(static🐰idiot)\n" +
+				"dynamic🐰ear  = \(dynamic🐰ear) \n" +
 				"dynamic🐰face = \(dynamic🐰face)\n" +
-				"smoke🐰 = \(static🐰smoke)\n" +
-				"black🐰 = \(static🐰black)\n" +
-			"total = \(static🐰origin + dynamic🐰ear + dynamic🐰face + static🐰smoke + static🐰black)"
+			"total = \(static🐰idiot + static🐰large + static🐰origin + dynamic🐰ear + dynamic🐰face + static🐰smoke + static🐰black)"
 			return
 			
 		case "github":
@@ -106,7 +108,6 @@ class AI {
 	}
 	
 	func privateMessage() {
-		print(message.raw_message)
 		// 判断色图
 		let CQImageRange = message.message!
 			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]",
@@ -144,19 +145,24 @@ class AI {
 			if message.raw_message!.contains("[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg") {
 				static🐰origin += 1
 			}
-			if message.raw_message!.contains("[CQ:image,file=B7B0DB87724D23B48134DAB2B4E25DA5.gif") {
-				dynamic🐰ear += 1
-			}
-			if message.raw_message!.contains("[CQ:image,file=AB3F72DEECF5C24A54BFEB938F253296.gif") {
-				dynamic🐰face += 1
-			}
 			if message.raw_message!.contains("[CQ:image,file=16C212D34EC17F62F84430BB86748602.jpg") {
 				static🐰smoke += 1
 			}
 			if message.raw_message!.contains("[CQ:image,file=9628EC83AC4DA822149CE58859CF2F5D.jpg") {
 				static🐰black += 1
 			}
-
+			if message.raw_message!.contains("[CQ:image,file=89D910E941219E1B5DD7940ED4085C5F.jpg") {
+				static🐰large += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=463BE7344D443443D3B53B9E181B79DD.jpg") {
+				static🐰idiot += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=B7B0DB87724D23B48134DAB2B4E25DA5.gif") {
+				dynamic🐰ear += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=AB3F72DEECF5C24A54BFEB938F253296.gif") {
+				dynamic🐰face += 1
+			}
 			return
 		}
 		
