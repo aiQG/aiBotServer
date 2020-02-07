@@ -63,10 +63,11 @@ class AI {
 			self.replyMessage.reply = "\n" +
 				"aiBot 支持命令:\n" +
 				"help: 显示此帮助\n" +
+				"echo: \"回声\"\n" +
+				"GitHub: 返回aiBot的项目地址\n" +
+				"fortune: A fortune cookie\n" +
 				"兔子: 返回出现的兔子表情个数\n" +
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
-				"GitHub: 返回aiBot的项目地址\n" +
-				"echo: \"回声\"\n" +
 				"[图片]: 判断图片H的概率"
 			return
 			
@@ -101,6 +102,10 @@ class AI {
 				word += "\n"
 			}
 			self.replyMessage.reply = word;
+			return
+			
+		case "fortune":
+			replyMessage.reply = execCmds(arg: ["fortune"])
 			return
 			
 			// 等待测试环境
