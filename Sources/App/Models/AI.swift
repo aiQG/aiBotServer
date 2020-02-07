@@ -9,11 +9,13 @@ import Vapor
 
 // 统计
 var 艹times: UInt32 = 0
-var static🐰: UInt32 = 0
+var static🐰origin: UInt32 = 0
 var dynamic🐰ear: UInt32 = 0
 var dynamic🐰face: UInt32 = 0
-var smoke🐰: UInt32 = 0
-var black🐰: UInt32 = 0
+var static🐰smoke: UInt32 = 0
+var static🐰black: UInt32 = 0
+var static🐰large: UInt32 = 0
+var static🐰idiot: UInt32 = 0
 
 struct AIMessage: Content {
 	var reply: String? = nil			/// 回复内容
@@ -74,12 +76,12 @@ class AI {
 			
 		case "兔子":
 			self.replyMessage.reply = "\n" +
-				"static🐰 = \(static🐰)\n" +
+				"static🐰 = \(static🐰origin)\n" +
 				"dynamic🐰ear = \(dynamic🐰ear)\n" +
 				"dynamic🐰face = \(dynamic🐰face)\n" +
-				"smoke🐰 = \(smoke🐰)\n" +
-				"black🐰 = \(black🐰)\n" +
-			"total = \(static🐰 + dynamic🐰ear + dynamic🐰face + smoke🐰 + black🐰)"
+				"smoke🐰 = \(static🐰smoke)\n" +
+				"black🐰 = \(static🐰black)\n" +
+			"total = \(static🐰origin + dynamic🐰ear + dynamic🐰face + static🐰smoke + static🐰black)"
 			return
 			
 		case "github":
@@ -104,6 +106,7 @@ class AI {
 	}
 	
 	func privateMessage() {
+		print(message.raw_message)
 		// 判断色图
 		let CQImageRange = message.message!
 			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]",
@@ -139,7 +142,7 @@ class AI {
 			
 			// 判断是否有兔子表情
 			if message.raw_message!.contains("[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg") {
-				static🐰 += 1
+				static🐰origin += 1
 			}
 			if message.raw_message!.contains("[CQ:image,file=B7B0DB87724D23B48134DAB2B4E25DA5.gif") {
 				dynamic🐰ear += 1
@@ -148,10 +151,10 @@ class AI {
 				dynamic🐰face += 1
 			}
 			if message.raw_message!.contains("[CQ:image,file=16C212D34EC17F62F84430BB86748602.jpg") {
-				smoke🐰 += 1
+				static🐰smoke += 1
 			}
 			if message.raw_message!.contains("[CQ:image,file=9628EC83AC4DA822149CE58859CF2F5D.jpg") {
-				black🐰 += 1
+				static🐰black += 1
 			}
 
 			return
