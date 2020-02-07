@@ -105,7 +105,7 @@ class AI {
 			return
 			
 		case "fortune":
-			replyMessage.reply = execCmds(arg: ["fortune"])
+			replyMessage.reply = "\n" + execCmds(arg: ["fortune"])
 			return
 			
 			// 等待测试环境
