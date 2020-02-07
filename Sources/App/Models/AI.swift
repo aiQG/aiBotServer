@@ -37,7 +37,7 @@ class AI {
 	var replyMessage = AIMessage()
 	init(m: JSONMessage) {
 		self.message = m
-		print(message.raw_message)
+		//print(message.raw_message)
 		// 判断群聊信息/私聊信息
 		switch self.message.message_type! {
 		case "private":
@@ -105,7 +105,7 @@ class AI {
 			return
 			
 		case "fortune":
-			replyMessage.reply = "\n" + execCmds(arg: ["fortune"])
+			self.replyMessage.reply = "\n" + execCmds(arg: ["fortune"])
 			return
 			
 			// 等待测试环境
