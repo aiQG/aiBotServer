@@ -2,10 +2,9 @@ import Vapor
 
 /// Register your application's routes here.
 public func routes(_ router: Router) throws {
-    // Basic "It works" example
+    
 	router.get { req -> String in
-		print("get\n")
-        return "It works!\(req)"
+        return  "It works!\(req)"
     }
     
     // Basic "Hello, world!" example
@@ -16,7 +15,7 @@ public func routes(_ router: Router) throws {
 	router.post { req -> AIMessage in
 		// 取出JSON解析结果
 		var message: JSONMessage?
-		try req.content.decode(JSONMessage.self).map(to: HTTPStatus.self){m in
+		_ = try req.content.decode(JSONMessage.self).map(to: HTTPStatus.self){m in
 			message = m
 			return .ok
 		}
@@ -34,8 +33,3 @@ public func routes(_ router: Router) throws {
     router.delete("todos", Todo.parameter, use: todoController.delete)
 }
 
-func gotPOSTMessage(req:Request) {
-	let reqString = "\(req)".split(separator: "\n")
-	
-	print(reqString)
-}
