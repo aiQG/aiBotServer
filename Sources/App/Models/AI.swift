@@ -66,7 +66,7 @@ class AI {
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
 				"GitHub: 返回aiBot的项目地址\n" +
 				"echo: \"回声\"\n" +
-				"[图片]: 判断图片H的概率" +
+				"[图片]: 判断图片H的概率\n" +
       "surprise: 一个惊喜！\n"
 			return
 			
@@ -105,8 +105,9 @@ class AI {
 			
     case "surprise":
 			self.replyMessage.ban = true
-			self.replyMessage.ban_duration = UInt32.random(in:1...30)
+			
 			self.replyMessage.reply = "\nAre you surprised?"
+			print(self.replyMessage)
 			return
       
 		default:
