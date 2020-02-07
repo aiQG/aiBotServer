@@ -105,7 +105,8 @@ class AI {
 			return
 			
 		case "fortune":
-			self.replyMessage.reply = "\n\(execCmds(arg: ["fortune", "-a"]))"
+			self.replyMessage.reply = "\n\(execCmds(arg: ["fortune", "-aw"]))"
+			
 			return
 			
 			// 等待测试环境
