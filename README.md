@@ -6,6 +6,6 @@
 
 #### Files
 
-`JSONMessage.swift` : 上报JSON的结构
+`/Sources/App/Models/JSONMessage.swift` : 上报JSON的结构
 
-`AI.swift` : //假的AI🤪
+`/Sources/App/Models/AI.swift` : //假的AI🤪
