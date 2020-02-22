@@ -146,7 +146,7 @@ class AI {
 	}
 	
 	func groupMessage() {
-		
+		print(message.message!)
 		// 没被at则遍历信息
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
 			_ = message.raw_message!.map({ (c:Character) in
