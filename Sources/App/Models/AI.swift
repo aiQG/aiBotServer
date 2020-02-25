@@ -72,20 +72,22 @@ class AI {
 			return
 			
 		case "艹", "草":
-			self.replyMessage.reply = "\n" +
-			"\"艹\"/\"草\"一共出现了 \(艹times) 次"
+			self.replyMessage.reply = "\n艹功能下线维护呢" + (Int.random(in: 0...100) & 1 == 0 ? ", 奴家也不知道QGG什么时候修好..." : "")
+//				"\n" +
+//			"\"艹\"/\"草\"一共出现了 \(艹times) 次"
 			return
 			
 		case "兔子":
-			self.replyMessage.reply = "\n" +
-				"static🐰origin = \(static🐰origin)\n" +
-				"static🐰smoke = \(static🐰smoke)\n" +
-				"static🐰black = \(static🐰black)\n" +
-				"static🐰large = \(static🐰large)\n" +
-				"static🐰idiot = \(static🐰idiot)\n" +
-				"dynamic🐰ear  = \(dynamic🐰ear) \n" +
-				"dynamic🐰face = \(dynamic🐰face)\n" +
-			"total = \(static🐰idiot + static🐰large + static🐰origin + dynamic🐰ear + dynamic🐰face + static🐰smoke + static🐰black)"
+			self.replyMessage.reply = "\n兔子功能下线维护了呢" + (Int.random(in: 0...100) & 1 == 0 ? ", 奴家也不知道QGG什么时候修好..." : "")
+//				"\n" +
+//				"static🐰origin = \(static🐰origin)\n" +
+//				"static🐰smoke = \(static🐰smoke)\n" +
+//				"static🐰black = \(static🐰black)\n" +
+//				"static🐰large = \(static🐰large)\n" +
+//				"static🐰idiot = \(static🐰idiot)\n" +
+//				"dynamic🐰ear  = \(dynamic🐰ear) \n" +
+//				"dynamic🐰face = \(dynamic🐰face)\n" +
+//			"total = \(static🐰idiot + static🐰large + static🐰origin + dynamic🐰ear + dynamic🐰face + static🐰smoke + static🐰black)"
 			return
 			
 		case "github":
