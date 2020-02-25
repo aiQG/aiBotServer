@@ -97,8 +97,9 @@ class AI {
 		case "echo":
 			var wordArray: [String] = self.message.raw_message!.map{String($0)}
 			var word = "\n";
-			wordArray.removeFirst(4)
-			for _ in 1..<wordArray.count {
+			guard wordArray.count >= 5 else { return }
+			wordArray.removeFirst(5)
+			for _ in 0..<wordArray.count {
 				wordArray.remove(at: 0)
 				word += wordArray.reduce(into: ""){$0+=$1}
 				word += "\n"
