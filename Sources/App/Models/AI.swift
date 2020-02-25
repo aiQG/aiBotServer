@@ -68,26 +68,26 @@ class AI {
 				"fortune: A fortune cookie\n" +
 				"兔子: 返回出现的兔子表情个数\n" +
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
-				"[图片]: 判断图片H的概率"
+			"[图片]: 判断图片H的概率"
 			return
 			
 		case "艹", "草":
 			self.replyMessage.reply = "\n艹功能下线维护呢" + (Int.random(in: 0...100) & 1 == 0 ? ", 奴家也不知道QGG什么时候修好..." : "")
-//				"\n" +
-//			"\"艹\"/\"草\"一共出现了 \(艹times) 次"
+			//				"\n" +
+			//			"\"艹\"/\"草\"一共出现了 \(艹times) 次"
 			return
 			
 		case "兔子":
 			self.replyMessage.reply = "\n兔子功能下线维护了呢" + (Int.random(in: 0...100) & 1 == 0 ? ", 奴家也不知道QGG什么时候修好..." : "")
-//				"\n" +
-//				"static🐰origin = \(static🐰origin)\n" +
-//				"static🐰smoke = \(static🐰smoke)\n" +
-//				"static🐰black = \(static🐰black)\n" +
-//				"static🐰large = \(static🐰large)\n" +
-//				"static🐰idiot = \(static🐰idiot)\n" +
-//				"dynamic🐰ear  = \(dynamic🐰ear) \n" +
-//				"dynamic🐰face = \(dynamic🐰face)\n" +
-//			"total = \(static🐰idiot + static🐰large + static🐰origin + dynamic🐰ear + dynamic🐰face + static🐰smoke + static🐰black)"
+			//				"\n" +
+			//				"static🐰origin = \(static🐰origin)\n" +
+			//				"static🐰smoke = \(static🐰smoke)\n" +
+			//				"static🐰black = \(static🐰black)\n" +
+			//				"static🐰large = \(static🐰large)\n" +
+			//				"static🐰idiot = \(static🐰idiot)\n" +
+			//				"dynamic🐰ear  = \(dynamic🐰ear) \n" +
+			//				"dynamic🐰face = \(dynamic🐰face)\n" +
+			//			"total = \(static🐰idiot + static🐰large + static🐰origin + dynamic🐰ear + dynamic🐰face + static🐰smoke + static🐰black)"
 			return
 			
 		case "github":
@@ -113,12 +113,12 @@ class AI {
 			return
 			
 			// 等待测试环境
-//    case "surprise":
-//			self.replyMessage.ban = true
-//			self.replyMessage.reply = "\nAre you surprised?"
-//			print(self.replyMessage)
-//			return
-      
+			//    case "surprise":
+			//			self.replyMessage.ban = true
+			//			self.replyMessage.reply = "\nAre you surprised?"
+			//			print(self.replyMessage)
+			//			return
+			
 		default:
 			break
 		}
@@ -210,20 +210,20 @@ class AI {
 		return
 	}
 	
-
+	
 	private func AICore() {
 		// 估价上亿的AI核心代码
-		self.replyMessage.reply = ""
-		//			self.message.raw_message!.reduce(into: "") { (res, c) in
-		//			switch c {
-		//			case "?", "？":
-		//				res! += "!"
-		//			case "吗", "呢":
-		//				res! += ""
-		//			default:
-		//				res! += String(c)
-		//			}
-		//		}
+		self.replyMessage.reply =
+			self.message.raw_message!.reduce(into: "") { (res, c) in
+				switch c {
+				case "?", "？":
+					res! += "!"
+				case "吗", "呢":
+					res! += ""
+				default:
+					res! += String(c)
+				}
+		}
 		
 		return
 	}
@@ -239,7 +239,7 @@ class AI {
 		task.waitUntilExit()
 		let data = pipe.fileHandleForReading.readDataToEndOfFile()
 		let output = String(data: data, encoding: .utf8) ?? ""
-//		print(output)
+		//		print(output)
 		return output
 	}
 	
