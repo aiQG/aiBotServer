@@ -98,7 +98,7 @@ class AI {
 			var wordArray: [String] = self.message.raw_message!.map{String($0)}
 			var word = "\n";
 			guard wordArray.count >= 5 else { return }
-			wordArray.removeFirst(5)
+			wordArray.removeFirst(4)
 			for _ in 0..<wordArray.count {
 				wordArray.remove(at: 0)
 				word += wordArray.reduce(into: ""){$0+=$1}
