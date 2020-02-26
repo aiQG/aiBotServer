@@ -126,7 +126,8 @@ class AI {
 			return
 			
 		case "fortune":
-			self.replyMessage.reply = "\n" + execCmds(arg: ["fortune", "-a"])
+			self.replyMessage.reply = "fortune功能下线维护了呢..." + (UInt.random(in: 0...9) == 10 ? "人家也不知道QGG什么时候修好..." : "")
+				//"\n" + execCmds(arg: ["fortune", "-a"])
 			
 			return
 			
@@ -374,7 +375,7 @@ class AI {
 			}
 			return
 		} else if status == "failure" {
-			self.replyMessage.reply = "\n图片上传失败" + (UInt.random(in: 0..<100) < 20 ? ", 再试一次吧~/n╮(￣▽￣)╭" : "")
+			self.replyMessage.reply = "\n图片上传失败" + (UInt.random(in: 0..<100) < 20 ? ", 再试一次吧~\n╮(￣▽￣)╭" : "")
 			return
 		}
 		
