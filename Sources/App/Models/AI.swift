@@ -35,12 +35,19 @@ struct AIMessage: Content {
 
 
 class AI {
-	let isDeepNight: Bool = Calendar.current.dateComponents([.hour], from: Date()).hour! < 5
-	let isMorning: Bool = (6...8).contains(Calendar.current.dateComponents([.hour], from: Date()).hour!)
-	let isWeekend: Bool = Calendar.current.dateComponents([.weekday], from: Date()).weekday! == 1 || Calendar.current.dateComponents([.weekday], from: Date()).weekday! == 7
+	var dateComponents: DateComponents
+	var isDeepNight: Bool = false
+	var isMorning: Bool = false
+	var isWeekend: Bool = false
 	var message: JSONMessage!
 	var replyMessage = AIMessage()
 	init(m: JSONMessage) {
+		dateComponents = Calendar.current.dateComponents([.year,.month, .day, .hour,.minute,.second,.weekday], from: Date())
+		dateComponents.hour! = (dateComponents.hour! + 8) % 24
+		dateComponents.weekday! = (dateComponents.weekday! + (dateComponents.hour! + 8) % 24) == 8 ? 1 : (dateComponents.weekday! + (dateComponents.hour! + 8) % 24)
+		isDeepNight = dateComponents.hour! < 5
+		isMorning = (6...8).contains(dateComponents.hour!)
+		isWeekend = dateComponents.weekday! == 1 || dateComponents.weekday! == 7
 		self.message = m
 		// 从文件更新数据
 		updataVar(mode: "r", fileName: "count", type: .Count)
