@@ -37,7 +37,8 @@ class AI {
 	var replyMessage = AIMessage()
 	init(m: JSONMessage) {
 		self.message = m
-		//print(message.raw_message)
+		// 从文件更新数据
+		updataVar(mode: "r", fileName: "count")
 		// 判断群聊信息/私聊信息
 		switch self.message.message_type! {
 		case "private":
@@ -73,19 +74,19 @@ class AI {
 			
 		case "艹", "草":
 			self.replyMessage.reply = "\n" +
-						"\"艹\"/\"草\"一共出现了 \(艹times) 次"
+			"\"艹\"/\"草\"一共出现了 \(艹times) 次"
 			return
 			
 		case "兔子":
 			self.replyMessage.reply = "\n" +
-							"static🐰origin = \(static🐰origin)\n" +
-							"static🐰smoke = \(static🐰smoke)\n" +
-							"static🐰black = \(static🐰black)\n" +
-							"static🐰large = \(static🐰large)\n" +
-							"static🐰idiot = \(static🐰idiot)\n" +
-							"dynamic🐰ear  = \(dynamic🐰ear) \n" +
-							"dynamic🐰face = \(dynamic🐰face)\n" +
-						"total = \(static🐰idiot + static🐰large + static🐰origin + dynamic🐰ear + dynamic🐰face + static🐰smoke + static🐰black)"
+				"static🐰origin = \(static🐰origin)\n" +
+				"static🐰smoke = \(static🐰smoke)\n" +
+				"static🐰black = \(static🐰black)\n" +
+				"static🐰large = \(static🐰large)\n" +
+				"static🐰idiot = \(static🐰idiot)\n" +
+				"dynamic🐰ear  = \(dynamic🐰ear) \n" +
+				"dynamic🐰face = \(dynamic🐰face)\n" +
+			"total = \(static🐰idiot + static🐰large + static🐰origin + dynamic🐰ear + dynamic🐰face + static🐰smoke + static🐰black)"
 			return
 			
 		case "github":
@@ -123,10 +124,6 @@ class AI {
 	}
 	
 	func privateMessage() {
-		print("read:")
-		updataVar(mode: "r")
-		print("write:")
-		updataVar(mode: "w")
 		print(message.message)
 		// 判断色图
 		let CQImageRange = message.message!
@@ -183,6 +180,8 @@ class AI {
 			if message.raw_message!.contains("[CQ:image,file=AB3F72DEECF5C24A54BFEB938F253296.gif") {
 				dynamic🐰face += 1
 			}
+			// 更新数据到文件
+			updataVar(mode: "w", fileName: "count")
 			return
 		}
 		
@@ -213,9 +212,8 @@ class AI {
 	}
 	
 	// 文件读写(更新)各种统计值
-	func updataVar(mode: Character){
-		let file = "count"
-		let dir = FileManager.default.currentDirectoryPath + "/\(file)"
+	func updataVar(mode: Character, fileName: String){
+		let dir = FileManager.default.currentDirectoryPath + "/\(fileName)"
 		let fileURL = URL(fileURLWithPath: dir)
 		switch mode {
 		case "r":
@@ -224,7 +222,7 @@ class AI {
 				print(dir)
 				let dic = textArr.reduce(into: [:]) { (res, i) in
 					res[String(i.split(separator: ":")[0]), default: 0] = UInt32(i.split(separator: ":")[1])
-				} as! [String:UInt32]
+					} as! [String:UInt32]
 				print(dic)
 				for (k, v) in dic {
 					switch k {
