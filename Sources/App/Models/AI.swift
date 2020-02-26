@@ -229,19 +229,19 @@ class AI {
 					case "fuckTimes":
 						艹times = v
 					case "rabbitStaticSmoke":
-						static🐰origin = v
-					case "rabbitStaticOrigin":
 						static🐰smoke = v
+					case "rabbitStaticOrigin":
+						static🐰origin = v
 					case "rabbitStaticBlack":
 						static🐰black = v
 					case "rabbitStaticIdiot":
-						static🐰large = v
-					case "rabbitStaticLarge":
 						static🐰idiot = v
+					case "rabbitStaticLarge":
+						static🐰large = v
 					case "rabbitDynamicFace":
-						dynamic🐰ear = v
-					case "rabbitDynamicEar":
 						dynamic🐰face = v
+					case "rabbitDynamicEar":
+						dynamic🐰ear = v
 					default:
 						continue
 					}
