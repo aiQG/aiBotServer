@@ -223,7 +223,7 @@ class AI {
 		case "r":
 			do {
 				let textArr = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n")
-				print(textArr)
+				print(dir)
 				let dic = textArr.reduce(into: [:]) { (res, i) in
 					res[String(i.split(separator: ":")[0]), default: 0] = UInt32(i.split(separator: ":")[1])
 				} as! [String:UInt32]
