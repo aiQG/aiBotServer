@@ -132,7 +132,7 @@ class AI {
 			return
 			
 		case "色图":
-			self.replyMessage.reply = "\n\(SeTuURLs.randomElement() ?? "好像没有找到色图呢...")"
+			self.replyMessage.reply = "\n\(SeTuURLs.randomElement() ?? "好像没有找到色图呢...")" + (UInt.random(in: 0...10) == 1 ? "\n小主人注意身心健康哦~" : "")
 			return
 			
 			// 等待测试环境
