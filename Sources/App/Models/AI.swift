@@ -41,6 +41,7 @@ class AI {
 		self.message = m
 		// 从文件更新数据
 		updataVar(mode: "r", fileName: "count", type: .Count)
+		updataVar(mode: "r", fileName: "SeTuURL", type: .SeTuURL)
 		// 判断群聊信息/私聊信息
 		switch self.message.message_type! {
 		case "private":
@@ -71,7 +72,7 @@ class AI {
 				"fortune: A fortune cookie\n" +
 				"兔子: 返回出现的兔子表情个数\n" +
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
-			"[图片]: 判断图片H的概率" +
+			"[图片]: 判断图片H的概率\n" +
 			"色图: 返回一张曾经出现过的色图(>0.35)"
 			return
 			
@@ -227,11 +228,9 @@ class AI {
 			case "r":
 				do {
 					let textArr = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n")
-					print(dir)
 					let dic = textArr.reduce(into: [:]) { (res, i) in
 						res[String(i.split(separator: ":")[0]), default: 0] = UInt32(i.split(separator: ":")[1])
 						} as! [String:UInt32]
-					print(dic)
 					for (k, v) in dic {
 						switch k {
 						case "fuckTimes":
@@ -283,6 +282,7 @@ class AI {
 			case "r":
 				do {
 					SeTuURLs = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n").map{String($0)}
+				print(SeTuURLs)
 				}
 				catch {
 					print("URL Read Error")
