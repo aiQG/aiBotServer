@@ -127,7 +127,7 @@ class AI {
 			
 		case "fortune":
 			self.replyMessage.reply = "fortune功能下线维护了呢..." + (UInt.random(in: 0...9) == 10 ? "人家也不知道QGG什么时候修好..." : "")
-				//"\n" + execCmds(arg: ["fortune", "-a"])
+			//"\n" + execCmds(arg: ["fortune", "-a"])
 			
 			return
 			
@@ -269,8 +269,7 @@ class AI {
 							continue
 						}
 					}
-				}
-				catch {
+				} catch {
 					print("Error: Read")
 				}
 				
@@ -286,8 +285,7 @@ class AI {
 				
 				do {
 					try text.write(to: fileURL, atomically: false, encoding: .utf8)
-				}
-				catch {
+				}catch {
 					print("Error: Write")
 				}
 			default:
@@ -298,16 +296,14 @@ class AI {
 			case "r":
 				do {
 					SeTuURLs = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n").map{String($0)}
-				}
-				catch {
+				} catch {
 					print("URL Read Error")
 				}
 			case "w":
 				do {
 					let text = SeTuURLs.joined(separator: "\n")
 					try text.write(to: fileURL, atomically: false, encoding: .utf8)
-				}
-				catch {
+				} catch {
 					print("URL Write Error")
 				}
 			default:
@@ -355,9 +351,19 @@ class AI {
 		let retVal = execCmds(arg: [String](ttt))
 		self.replyMessage.reply = retVal
 		
-		var status = String(self.replyMessage.reply!.split(separator: ":")[1].split(separator: " ").first!)
+		let tempstatus = self.replyMessage.reply!.split(separator: ":")
+		guard tempstatus.count >= 2 else {
+			self.replyMessage.reply = "\n发生了意料之外的事呢, 结果返回:\(retVal)\n\n快告诉QGG!"
+			return
+		}
+		var status = String(tempstatus[1].split(separator: " ").first ?? "")
+		guard status.count >= 4 else {
+			self.replyMessage.reply = "\n发生了意料之外的事呢, 结果返回:\(retVal)\n\n快告诉QGG!"
+			return
+		}
 		status.removeLast(3)
 		status.removeFirst()
+		
 		if status == "success"{
 			var rate = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
 			rate.removeLast(2) // remove "\n" and ","
@@ -379,7 +385,7 @@ class AI {
 			return
 		}
 		
-		self.replyMessage.reply = "\n发生了意料之外的事呢, 结果返回:\(retVal)\n\n快告诉QGG!"
+		
 		return
 	}
 }
