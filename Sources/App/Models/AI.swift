@@ -109,7 +109,7 @@ class AI {
 			return
 			
 		case "github":
-			self.replyMessage.reply = "\naiBot项目连接: github.com/aiQG/aiBotServer"
+			self.replyMessage.reply = "\naiBot项目链接: github.com/aiQG/aiBotServer"
 			return
 			
 		case "echo":
