@@ -377,7 +377,7 @@ class AI {
 			if Float(rate) ?? 0 >= 0.35 {
 				SeTuURLs.append(url)
 				updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
-				self.replyMessage.reply! += Float(rate) ?? 0 >= 0.75 ? "啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄" : "\n已保存到服务器"
+				self.replyMessage.reply! += Float(rate) ?? 0 >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄" : "\n已保存到服务器"
 			}
 			return
 		} else if status == "failure" {
