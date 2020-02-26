@@ -225,7 +225,7 @@ class AI {
 				let textArr = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n")
 				print(textArr)
 				let dic = textArr.reduce(into: [:]) { (res, i) in
-					res[String(i.split(separator: ":")[0]), default: 0] = i.split(separator: ":")[1]
+					res[String(i.split(separator: ":")[0]), default: 0] = UInt32(i.split(separator: ":")[1])
 				} as! [String:UInt32]
 				print(dic)
 				for (k, v) in dic {
