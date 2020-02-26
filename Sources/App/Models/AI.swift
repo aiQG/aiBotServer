@@ -150,7 +150,7 @@ class AI {
 	}
 	
 	func groupMessage() {
-		print(message.message) 
+		print(message.message)
 		// 没被at则遍历信息
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
 			_ = message.raw_message!.map({ (c:Character) in
@@ -210,6 +210,65 @@ class AI {
 		return
 	}
 	
+	// 文件读写(更新)各种统计值
+	func updataVar(mode: Character){
+		let file = "count"
+		let dir = FileManager.default.currentDirectoryPath + "/\(file)"
+		let fileURL = URL(fileURLWithPath: dir)
+		switch mode {
+		case "r":
+			do {
+				let textArr = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n")
+				let dic = textArr.reduce(into: [:]) { (res, i) in
+					res[i.split(separator: ":")[0], default: 0] = i.split(separator: ":")[1]
+				}
+//				for (k, v) in dic {
+//					switch k {
+//					case "fuckTimes":
+//						艹times = UInt32(v) ?? 0
+//					case "rabbitStaticSmoke":
+//						static🐰origin = UInt32(v) ?? 0
+//					case "rabbitStaticOrigin":
+//						static🐰smoke = UInt32(v) ?? 0
+//					case "rabbitStaticBlack":
+//						static🐰black = UInt32(v) ?? 0
+//					case "rabbitStaticIdiot":
+//						static🐰large = UInt32(v) ?? 0
+//					case "rabbitStaticLarge":
+//						static🐰idiot = UInt32(v) ?? 0
+//					case "rabbitDynamicFace":
+//						dynamic🐰ear = UInt32(v) ?? 0
+//					case "rabbitDynamicEar":
+//						dynamic🐰face = UInt32(v) ?? 0
+//					default:
+//						continue
+//					}
+//				}
+			}
+			catch {
+				print("Error: Read")
+			}
+			
+		case "w":
+			let text = "fuckTimes:\(艹times)\n" +
+				"rabbitStaticOrigin:\(static🐰origin)\n" +
+				"rabbitStaticSmoke:\(static🐰smoke)\n" +
+				"rabbitStaticBlack:\(static🐰black)\n" +
+				"rabbitStaticLarge:\(static🐰large)\n" +
+				"rabbitStaticIdiot:\(static🐰idiot)\n" +
+				"rabbitDynamicEar:\(dynamic🐰ear)\n" +
+			"rabbitDynamicFace:\(dynamic🐰face)"
+			
+			do {
+				try text.write(to: fileURL, atomically: false, encoding: .utf8)
+			}
+			catch {
+				print("Error: Write")
+			}
+		default:
+			return
+		}
+	}
 	
 	private func AICore() {
 		// 估价上亿的AI核心代码
