@@ -224,31 +224,31 @@ class AI {
 			do {
 				let textArr = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n")
 				let dic = textArr.reduce(into: [:]) { (res, i) in
-					res[i.split(separator: ":")[0], default: 0] = i.split(separator: ":")[1]
-				}
+					res[String(i.split(separator: ":")[0]), default: 0] = i.split(separator: ":")[1]
+				} as! [String:UInt32]
 				print(dic)
-//				for (k, v) in dic {
-//					switch k {
-//					case "fuckTimes":
-//						艹times = UInt32(v) ?? 0
-//					case "rabbitStaticSmoke":
-//						static🐰origin = UInt32(v) ?? 0
-//					case "rabbitStaticOrigin":
-//						static🐰smoke = UInt32(v) ?? 0
-//					case "rabbitStaticBlack":
-//						static🐰black = UInt32(v) ?? 0
-//					case "rabbitStaticIdiot":
-//						static🐰large = UInt32(v) ?? 0
-//					case "rabbitStaticLarge":
-//						static🐰idiot = UInt32(v) ?? 0
-//					case "rabbitDynamicFace":
-//						dynamic🐰ear = UInt32(v) ?? 0
-//					case "rabbitDynamicEar":
-//						dynamic🐰face = UInt32(v) ?? 0
-//					default:
-//						continue
-//					}
-//				}
+				for (k, v) in dic {
+					switch k {
+					case "fuckTimes":
+						艹times = v
+					case "rabbitStaticSmoke":
+						static🐰origin = v
+					case "rabbitStaticOrigin":
+						static🐰smoke = v
+					case "rabbitStaticBlack":
+						static🐰black = v
+					case "rabbitStaticIdiot":
+						static🐰large = v
+					case "rabbitStaticLarge":
+						static🐰idiot = v
+					case "rabbitDynamicFace":
+						dynamic🐰ear = v
+					case "rabbitDynamicEar":
+						dynamic🐰face = v
+					default:
+						continue
+					}
+				}
 			}
 			catch {
 				print("Error: Read")
