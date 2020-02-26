@@ -140,7 +140,7 @@ class AI {
 	}
 	
 	func privateMessage() {
-		print(Calendar.current.dateComponents([.year,.month, .day, .hour,.minute,.second], from: Date()))
+		print(Calendar.current.dateComponents([.year,.month, .day, .hour,.minute,.second,.weekday], from: Date()).hour, Calendar.current.dateComponents([.year,.month, .day, .hour,.minute,.second,.weekday], from: Date()).weekday)
 		print(message.message)
 		// 判断色图
 		let CQImageRange = message.message!
