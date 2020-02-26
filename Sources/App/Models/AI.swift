@@ -44,7 +44,7 @@ class AI {
 	init(m: JSONMessage) {
 		dateComponents = Calendar.current.dateComponents([.year,.month, .day, .hour,.minute,.second,.weekday], from: Date())
 		dateComponents.hour! = (dateComponents.hour! + 8) % 24
-		dateComponents.weekday! = (dateComponents.weekday! + (dateComponents.hour! + 8) % 24) == 8 ? 1 : (dateComponents.weekday! + (dateComponents.hour! + 8) % 24)
+		dateComponents.weekday! = (dateComponents.weekday! + (dateComponents.hour! + 8) / 24) == 8 ? 1 : (dateComponents.weekday! + (dateComponents.hour! + 8) / 24)
 		isDeepNight = dateComponents.hour! < 5
 		isMorning = (6...8).contains(dateComponents.hour!)
 		isWeekend = dateComponents.weekday! == 1 || dateComponents.weekday! == 7
