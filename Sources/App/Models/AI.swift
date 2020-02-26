@@ -35,6 +35,9 @@ struct AIMessage: Content {
 
 
 class AI {
+	let isDeepNight: Bool = Calendar.current.dateComponents([.hour], from: Date()).hour! < 5
+	let isMorning: Bool = (6...8).contains(Calendar.current.dateComponents([.hour], from: Date()).hour!)
+	let isWeekend: Bool = Calendar.current.dateComponents([.weekday], from: Date()).weekday! == 1 || Calendar.current.dateComponents([.weekday], from: Date()).weekday! == 7
 	var message: JSONMessage!
 	var replyMessage = AIMessage()
 	init(m: JSONMessage) {
@@ -50,6 +53,11 @@ class AI {
 			groupMessage()
 		default:
 			break
+		}
+		if isDeepNight {
+			self.replyMessage.reply! += UInt.random(in: 0..<100) < 30 ? "\n夜深了, 小主人要好好休息哦~" : (UInt.random(in: 0...520) < 500 ? "" : "\n今晚的月色真美呢...")
+		} else if isMorning {
+			self.replyMessage.reply! += UInt.random(in: 0..<100) < 20 ? ("\n又是新的一天呢~" + (UInt.random(in: 0...10)<2&&isWeekend ? "\n今天是周末, 小主人可以和人家一起玩吗...\n(*/ω＼*)":"")):""
 		}
 	}
 	
@@ -72,7 +80,7 @@ class AI {
 				"fortune: A fortune cookie\n" +
 				"兔子: 返回出现的兔子表情个数\n" +
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
-			"[图片]: 判断图片H的概率\n" +
+				"[图片]: 判断图片H的概率\n" +
 			"色图: 返回一张曾经出现过的色图(>0.35)"
 			return
 			
@@ -132,6 +140,7 @@ class AI {
 	}
 	
 	func privateMessage() {
+		print(Calendar.current.dateComponents([.year,.month, .day, .hour,.minute,.second], from: Date()))
 		print(message.message)
 		// 判断色图
 		let CQImageRange = message.message!
@@ -282,7 +291,6 @@ class AI {
 			case "r":
 				do {
 					SeTuURLs = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n").map{String($0)}
-				print(SeTuURLs)
 				}
 				catch {
 					print("URL Read Error")
@@ -347,7 +355,7 @@ class AI {
 			var rate = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
 			rate.removeLast(2) // remove "\n" and ","
 			if Float(rate) ?? 0 <= 0.01 {
-				self.replyMessage.reply = "\n这不是色图"
+				self.replyMessage.reply = "\n这不是色图" + (UInt.random(in: 0..<100) < 30 ? "哦~" : "")
 				self.replyMessage.at_sender = true
 				return
 			}
@@ -356,15 +364,15 @@ class AI {
 			if Float(rate) ?? 0 >= 0.35 {
 				SeTuURLs.append(url)
 				updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
-				self.replyMessage.reply! += "\n已保存到服务器"
+				self.replyMessage.reply! += Float(rate) ?? 0 >= 0.75 ? "啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄" : "\n已保存到服务器"
 			}
 			return
 		} else if status == "failure" {
-			self.replyMessage.reply = "\n图片上传失败"
+			self.replyMessage.reply = "\n图片上传失败" + (UInt.random(in: 0..<100) < 20 ? ", 再试一次吧~/n╮(￣▽￣)╭" : "")
 			return
 		}
 		
-		self.replyMessage.reply = "\n发生了意料之外的事,结果返回:\(retVal)"
+		self.replyMessage.reply = "\n发生了意料之外的事呢, 结果返回:\(retVal)\n\n快告诉QGG!"
 		return
 	}
 }
