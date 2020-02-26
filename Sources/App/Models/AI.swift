@@ -17,6 +17,8 @@ var static🐰idiot: UInt32 = 0
 var dynamic🐰ear: UInt32 = 0
 var dynamic🐰face: UInt32 = 0
 
+var SeTuURLs: [String] = []
+
 struct AIMessage: Content {
 	var reply: String? = nil			/// 回复内容
 	var auto_escape: Bool = false		/// 是否解析CQ码
@@ -69,7 +71,8 @@ class AI {
 				"fortune: A fortune cookie\n" +
 				"兔子: 返回出现的兔子表情个数\n" +
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
-			"[图片]: 判断图片H的概率"
+			"[图片]: 判断图片H的概率" +
+			"色图: 返回一张曾经出现过的色图(>0.35)"
 			return
 			
 		case "艹", "草":
@@ -111,6 +114,10 @@ class AI {
 			
 			return
 			
+		case "色图":
+			self.replyMessage.reply = "\n\(SeTuURLs.randomElement() ?? "好像没有找到色图呢...")"
+			return
+			
 			// 等待测试环境
 			//    case "surprise":
 			//			self.replyMessage.ban = true
@@ -119,7 +126,7 @@ class AI {
 			//			return
 			
 		default:
-			break
+			return
 		}
 	}
 	
@@ -271,6 +278,26 @@ class AI {
 			default:
 				return
 			}
+		} else if type == .SeTuURL {
+			switch mode {
+			case "r":
+				do {
+					SeTuURLs = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n").map{String($0)}
+				}
+				catch {
+					print("URL Read Error")
+				}
+			case "w":
+				do {
+					let text = SeTuURLs.joined(separator: "\n")
+					try text.write(to: fileURL, atomically: false, encoding: .utf8)
+				}
+				catch {
+					print("URL Write Error")
+				}
+			default:
+				return
+			}
 		}
 	}
 	
@@ -326,8 +353,9 @@ class AI {
 			}
 			self.replyMessage.at_sender = true
 			self.replyMessage.reply = "\n色图的概率为 \(Float(rate)! * 100)%"
-			if Float(rate) ?? 0 >= 0.50 {
-				// TODO: 保存到服务器
+			if Float(rate) ?? 0 >= 0.35 {
+				SeTuURLs.append(url)
+				updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
 				self.replyMessage.reply! += "\n已保存到服务器"
 			}
 			return
