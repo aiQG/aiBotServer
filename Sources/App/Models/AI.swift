@@ -88,7 +88,7 @@ class AI {
 				"兔子: 返回出现的兔子表情个数\n" +
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
 				"[图片]: 判断图片H的概率\n" +
-			"色图: 返回一张曾经出现过的色图(>0.35)"
+			"色图: 返回一张曾经出现过的色图(当前共\(SeTuURLs.count)张)"
 			return
 			
 		case "艹", "草":
@@ -375,8 +375,10 @@ class AI {
 			self.replyMessage.at_sender = true
 			self.replyMessage.reply = "\n色图的概率为 \(Float(rate)! * 100)%"
 			if Float(rate) ?? 0 >= 0.35 {
-				SeTuURLs.append(url)
-				updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
+				if !SeTuURLs.contains(url) {
+					SeTuURLs.append(url)
+					updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
+				}
 				self.replyMessage.reply! += Float(rate) ?? 0 >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄" : "\n已保存到服务器"
 			}
 			return
