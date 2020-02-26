@@ -189,7 +189,7 @@ class AI {
 			if message.raw_message!.contains("[CQ:image,file=16C212D34EC17F62F84430BB86748602.jpg") {
 				static🐰smoke += 1
 			}
-			if message.raw_message!.contains("[CQ:image,file=C39AD67D1B62EB681F6FB45B4967DCD8.jpg") {
+			if message.raw_message!.contains("[CQ:image,file=9628EC83AC4DA822149CE58859CF2F5D.jpg") {
 				static🐰black += 1
 			}
 			if message.raw_message!.contains("[CQ:image,file=89D910E941219E1B5DD7940ED4085C5F.jpg") {
