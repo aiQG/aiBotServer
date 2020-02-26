@@ -125,6 +125,10 @@ class AI {
 	}
 	
 	func privateMessage() {
+		print("read:")
+		updataVar(mode: "r")
+		print("write:")
+		updataVar(mode: "w")
 		print(message.message)
 		// 判断色图
 		let CQImageRange = message.message!
@@ -222,6 +226,7 @@ class AI {
 				let dic = textArr.reduce(into: [:]) { (res, i) in
 					res[i.split(separator: ":")[0], default: 0] = i.split(separator: ":")[1]
 				}
+				print(dic)
 //				for (k, v) in dic {
 //					switch k {
 //					case "fuckTimes":
