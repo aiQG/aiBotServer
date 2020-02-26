@@ -147,8 +147,6 @@ class AI {
 	}
 	
 	func privateMessage() {
-		print(TimeZone.current.identifier)
-		print(dateComponents.hour, dateComponents.weekday)
 		print(message.message)
 		// 判断色图
 		let CQImageRange = message.message!
