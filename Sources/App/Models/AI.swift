@@ -38,7 +38,7 @@ class AI {
 	init(m: JSONMessage) {
 		self.message = m
 		// 从文件更新数据
-		updataVar(mode: "r", fileName: "count")
+		updataVar(mode: "r", fileName: "count", type: .Count)
 		// 判断群聊信息/私聊信息
 		switch self.message.message_type! {
 		case "private":
@@ -181,7 +181,7 @@ class AI {
 				dynamic🐰face += 1
 			}
 			// 更新数据到文件
-			updataVar(mode: "w", fileName: "count")
+			updataVar(mode: "w", fileName: "count", type: .Count)
 			return
 		}
 		
@@ -212,63 +212,65 @@ class AI {
 	}
 	
 	// 文件读写(更新)各种统计值
-	func updataVar(mode: Character, fileName: String){
+	func updataVar(mode: Character, fileName: String, type: RWDataType){
 		let dir = FileManager.default.currentDirectoryPath + "/\(fileName)"
 		let fileURL = URL(fileURLWithPath: dir)
-		switch mode {
-		case "r":
-			do {
-				let textArr = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n")
-				print(dir)
-				let dic = textArr.reduce(into: [:]) { (res, i) in
-					res[String(i.split(separator: ":")[0]), default: 0] = UInt32(i.split(separator: ":")[1])
-					} as! [String:UInt32]
-				print(dic)
-				for (k, v) in dic {
-					switch k {
-					case "fuckTimes":
-						艹times = v
-					case "rabbitStaticSmoke":
-						static🐰smoke = v
-					case "rabbitStaticOrigin":
-						static🐰origin = v
-					case "rabbitStaticBlack":
-						static🐰black = v
-					case "rabbitStaticIdiot":
-						static🐰idiot = v
-					case "rabbitStaticLarge":
-						static🐰large = v
-					case "rabbitDynamicFace":
-						dynamic🐰face = v
-					case "rabbitDynamicEar":
-						dynamic🐰ear = v
-					default:
-						continue
+		if type == RWDataType.Count {
+			switch mode {
+			case "r":
+				do {
+					let textArr = try String(contentsOf: fileURL, encoding: .utf8).split(separator: "\n")
+					print(dir)
+					let dic = textArr.reduce(into: [:]) { (res, i) in
+						res[String(i.split(separator: ":")[0]), default: 0] = UInt32(i.split(separator: ":")[1])
+						} as! [String:UInt32]
+					print(dic)
+					for (k, v) in dic {
+						switch k {
+						case "fuckTimes":
+							艹times = v
+						case "rabbitStaticSmoke":
+							static🐰smoke = v
+						case "rabbitStaticOrigin":
+							static🐰origin = v
+						case "rabbitStaticBlack":
+							static🐰black = v
+						case "rabbitStaticIdiot":
+							static🐰idiot = v
+						case "rabbitStaticLarge":
+							static🐰large = v
+						case "rabbitDynamicFace":
+							dynamic🐰face = v
+						case "rabbitDynamicEar":
+							dynamic🐰ear = v
+						default:
+							continue
+						}
 					}
 				}
+				catch {
+					print("Error: Read")
+				}
+				
+			case "w":
+				let text = "fuckTimes:\(艹times)\n" +
+					"rabbitStaticOrigin:\(static🐰origin)\n" +
+					"rabbitStaticSmoke:\(static🐰smoke)\n" +
+					"rabbitStaticBlack:\(static🐰black)\n" +
+					"rabbitStaticLarge:\(static🐰large)\n" +
+					"rabbitStaticIdiot:\(static🐰idiot)\n" +
+					"rabbitDynamicEar:\(dynamic🐰ear)\n" +
+				"rabbitDynamicFace:\(dynamic🐰face)"
+				
+				do {
+					try text.write(to: fileURL, atomically: false, encoding: .utf8)
+				}
+				catch {
+					print("Error: Write")
+				}
+			default:
+				return
 			}
-			catch {
-				print("Error: Read")
-			}
-			
-		case "w":
-			let text = "fuckTimes:\(艹times)\n" +
-				"rabbitStaticOrigin:\(static🐰origin)\n" +
-				"rabbitStaticSmoke:\(static🐰smoke)\n" +
-				"rabbitStaticBlack:\(static🐰black)\n" +
-				"rabbitStaticLarge:\(static🐰large)\n" +
-				"rabbitStaticIdiot:\(static🐰idiot)\n" +
-				"rabbitDynamicEar:\(dynamic🐰ear)\n" +
-			"rabbitDynamicFace:\(dynamic🐰face)"
-			
-			do {
-				try text.write(to: fileURL, atomically: false, encoding: .utf8)
-			}
-			catch {
-				print("Error: Write")
-			}
-		default:
-			return
 		}
 	}
 	
