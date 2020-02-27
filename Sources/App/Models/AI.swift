@@ -136,6 +136,7 @@ class AI {
 				self.replyMessage.reply = "\n在群里发色图的话, 群主大人会生气的了\n私聊人家偷偷给你发哟~"
 			} else {
 				self.replyMessage.reply = "\n\(SeTuURLs.randomElement() ?? "好像没有找到色图呢...")" + (UInt.random(in: 0...10) == 1 ? "\n小主人注意身心健康哦~" : "")
+				self.replyMessage.reply! += UInt.random(in: 0..<10) == 1 ? "/n(偷偷告许你, 给我私发色图就能把色图保存下来了!)" : ""
 			}
 			
 			return
