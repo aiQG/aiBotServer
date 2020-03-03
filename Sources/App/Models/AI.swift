@@ -359,7 +359,7 @@ class AI {
 		print(retVal)
 		print("---------------")
 		let json = JSON(parseJSON: retVal)
-		print(json)
+		print(json["status"])
 		print("===")
 		self.replyMessage.reply = retVal
 		
