@@ -365,8 +365,8 @@ class AI {
 				return
 			}
 			self.replyMessage.at_sender = true
-			self.replyMessage.reply = "\n色图的概率为 \( (1 - (json["nudity"]["safe"].double ?? 0)) * 100 )%"
-			if 1 - (json["nudity"]["safe"].double ?? 0) >= 0.35 {
+			self.replyMessage.reply = "\n色图的概率为 \( String(format: "%.4f", (1 - (json["nudity"]["safe"].double ?? 0)) * 100) )%"
+			if 1 - (json["nudity"]["safe"].double ?? 0) >= 0.20 {
 				if !SeTuURLs.contains(url) {
 					SeTuURLs.append(url)
 					updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
