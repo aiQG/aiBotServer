@@ -365,13 +365,13 @@ class AI {
 				return
 			}
 			self.replyMessage.at_sender = true
-			self.replyMessage.reply = "\n色图的概率为 \( String(format: "%.4f", (1 - (json["nudity"]["safe"].double ?? 0)) * 100) )%"
+			self.replyMessage.reply = "\n色图的概率为 \( String(format: "%.2f", (1 - (json["nudity"]["safe"].double ?? 0)) * 100) )%"
 			if 1 - (json["nudity"]["safe"].double ?? 0) >= 0.20 {
 				if !SeTuURLs.contains(url) {
 					SeTuURLs.append(url)
 					updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
 				}
-				self.replyMessage.reply! += 1 - (json["nudity"]["safe"].double ?? 0) >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄" : "\n已保存到服务器"
+				self.replyMessage.reply! += 1 - (json["nudity"]["safe"].double ?? 0) >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄>⁄ω⁄<⁄ ⁄)⁄" : "\n已保存到服务器"
 			}
 			return
 		} else if json["status"] == "failure" {
