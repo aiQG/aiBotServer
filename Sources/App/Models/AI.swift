@@ -359,7 +359,7 @@ class AI {
 		print(retVal)
 		print("---------------")
 		let json = JSON(parseJSON: retVal)
-		print(json["nudity"]["safe"], type(of:json["nudity"]["safe"]))
+		print(json["nudity"]["safe"].double)
 		print("===")
 		
 		
