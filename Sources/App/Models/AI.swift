@@ -359,45 +359,31 @@ class AI {
 		print(retVal)
 		print("---------------")
 		let json = JSON(parseJSON: retVal)
-		print(json["status"])
+		print(json["nudity"]["safe"], type(of:json["nudity"]["safe"]))
 		print("===")
-		self.replyMessage.reply = retVal
 		
-		let tempstatus = self.replyMessage.reply!.split(separator: ":")
-		guard tempstatus.count >= 2 else {
-			self.replyMessage.reply = "\n发生了意料之外的事呢, 结果返回:\(retVal)\n\n快告诉QGG!"
-			return
-		}
-		var status = String(tempstatus[1].split(separator: " ").first ?? "")
-		guard status.count >= 4 else {
-			self.replyMessage.reply = "\n发生了意料之外的事呢, 结果返回:\(retVal)\n\n快告诉QGG!"
-			return
-		}
-		status.removeLast(3)
-		status.removeFirst()
 		
-		if status == "success"{
-			var rate = String(self.replyMessage.reply!.split(separator: ":")[7].split(separator: " ").first!)
-			rate.removeLast(2) // remove "\n" and ","
-			if Float(rate) ?? 0 <= 0.01 {
-				self.replyMessage.reply = "\n这不是色图" + (UInt.random(in: 0..<100) < 30 ? "哦~" : "")
-				self.replyMessage.at_sender = true
-				return
-			}
-			self.replyMessage.at_sender = true
-			self.replyMessage.reply = "\n色图的概率为 \(Float(rate)! * 100)%"
-			if Float(rate) ?? 0 >= 0.35 {
-				if !SeTuURLs.contains(url) {
-					SeTuURLs.append(url)
-					updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
-				}
-				self.replyMessage.reply! += Float(rate) ?? 0 >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄" : "\n已保存到服务器"
-			}
-			return
-		} else if status == "failure" {
-			self.replyMessage.reply = "\n图片上传失败" + (UInt.random(in: 0..<100) < 20 ? ", 再试一次吧~\n╮(￣▽￣)╭" : "")
-			return
-		}
+//		if json["status"] == "success"{
+//
+//			if json["nudity"]["safe"] >= 0.97 {
+//				self.replyMessage.reply = "\n这不是色图" + (UInt.random(in: 0..<100) < 30 ? "哦~" : "")
+//				self.replyMessage.at_sender = true
+//				return
+//			}
+//			self.replyMessage.at_sender = true
+//			self.replyMessage.reply = "\n色图的概率为 \((1 - Double(json["nudity"]["safe"])) * 100)%"
+//			if Float(rate) ?? 0 >= 0.35 {
+//				if !SeTuURLs.contains(url) {
+//					SeTuURLs.append(url)
+//					updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
+//				}
+//				self.replyMessage.reply! += Float(rate) ?? 0 >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄" : "\n已保存到服务器"
+//			}
+//			return
+//		} else if json["status"] == "failure" {
+//			self.replyMessage.reply = "\n图片上传失败" + (UInt.random(in: 0..<100) < 20 ? ", 再试一次吧~\n╮(￣▽￣)╭" : "")
+//			return
+//		}
 		
 		
 		return
