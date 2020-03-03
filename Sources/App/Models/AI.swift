@@ -355,35 +355,31 @@ class AI {
 		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=\(url)"
 			.split(separator: " ").map{String($0)}
 		let retVal = execCmds(arg: [String](ttt))
-		print("===")
-		print(retVal)
-		print("---------------")
 		let json = JSON(parseJSON: retVal)
-		print(json["nudity"]["safe"].double)
-		print("===")
-		
-		
-//		if json["status"] == "success"{
-//
-//			if json["nudity"]["safe"] >= 0.97 {
-//				self.replyMessage.reply = "\n这不是色图" + (UInt.random(in: 0..<100) < 30 ? "哦~" : "")
-//				self.replyMessage.at_sender = true
-//				return
-//			}
-//			self.replyMessage.at_sender = true
-//			self.replyMessage.reply = "\n色图的概率为 \((1 - Double(json["nudity"]["safe"])) * 100)%"
-//			if Float(rate) ?? 0 >= 0.35 {
-//				if !SeTuURLs.contains(url) {
-//					SeTuURLs.append(url)
-//					updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
-//				}
-//				self.replyMessage.reply! += Float(rate) ?? 0 >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄" : "\n已保存到服务器"
-//			}
-//			return
-//		} else if json["status"] == "failure" {
-//			self.replyMessage.reply = "\n图片上传失败" + (UInt.random(in: 0..<100) < 20 ? ", 再试一次吧~\n╮(￣▽￣)╭" : "")
-//			return
-//		}
+
+		if json["status"] == "success"{
+
+			if json["nudity"]["safe"].double ?? 0 >= 0.97 {
+				self.replyMessage.reply = "\n这不是色图" + (UInt.random(in: 0..<100) < 30 ? "哦~" : "")
+				self.replyMessage.at_sender = true
+				return
+			}
+			self.replyMessage.at_sender = true
+			self.replyMessage.reply = "\n色图的概率为 \( (1 - (json["nudity"]["safe"].double ?? 0)) * 100 )%"
+			if 1 - (json["nudity"]["safe"].double ?? 0) >= 0.35 {
+				if !SeTuURLs.contains(url) {
+					SeTuURLs.append(url)
+					updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
+				}
+				self.replyMessage.reply! += 1 - (json["nudity"]["safe"].double ?? 0) >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄" : "\n已保存到服务器"
+			}
+			return
+		} else if json["status"] == "failure" {
+			self.replyMessage.reply = "\n图片上传失败\n" +
+				"服务器提示: \(json["error"]["message"])\n" +
+				(UInt.random(in: 0..<100) < 20 ? ", 再试一次吧~\n╮(￣▽￣)╭" : "")
+			return
+		}
 		
 		
 		return
