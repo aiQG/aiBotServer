@@ -379,6 +379,8 @@ class AI {
 				"服务器提示: \(json["error"]["message"])\n" +
 				(UInt.random(in: 0..<100) < 20 ? ", 再试一次吧~\n╮(￣▽￣)╭" : "")
 			return
+		} else {
+			self.replyMessage.reply = "\n发生了意料之外的事呢! 快去告诉QGG!\n服务器返回\n\(retVal)"
 		}
 		
 		
