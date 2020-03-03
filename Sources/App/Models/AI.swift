@@ -355,6 +355,12 @@ class AI {
 		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=\(url)"
 			.split(separator: " ").map{String($0)}
 		let retVal = execCmds(arg: [String](ttt))
+		print("===")
+		print(retVal)
+		print("---------------")
+		let json = JSON(parseJSON: retVal)
+		print(json)
+		print("===")
 		self.replyMessage.reply = retVal
 		
 		let tempstatus = self.replyMessage.reply!.split(separator: ":")
