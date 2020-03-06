@@ -156,94 +156,6 @@ class AI {
 		}
 	}
 	
-	func privateMessage() {
-		print(message.message)
-		// 判断色图
-		let CQImageRange = message.message!
-			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]",
-				   options: .regularExpression)
-		if CQImageRange != nil {
-			let urlRange = message.message![CQImageRange!]
-				.range(of: "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]",
-					   options: .regularExpression)
-			if urlRange != nil {
-				let url = message.message![urlRange!]
-				hentai(url: String(url))
-			}
-		}
-		
-		cmds()
-		if self.replyMessage.reply != nil {
-			return
-		}
-		
-		AICore()
-		return
-	}
-	
-	func groupMessage() {
-		print(message.message)
-		// 没被at则遍历信息
-		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
-			_ = message.raw_message!.map({ (c:Character) in
-				if c == "艹" || c == "草" {
-					艹times += 1
-				}
-			})
-			
-			// 判断是否有兔子表情
-			if message.raw_message!.contains("[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg") {
-				static🐰origin += 1
-			}
-			if message.raw_message!.contains("[CQ:image,file=16C212D34EC17F62F84430BB86748602.jpg") {
-				static🐰smoke += 1
-			}
-			if message.raw_message!.contains("[CQ:image,file=9628EC83AC4DA822149CE58859CF2F5D.jpg") {
-				static🐰black += 1
-			}
-			if message.raw_message!.contains("[CQ:image,file=89D910E941219E1B5DD7940ED4085C5F.jpg") {
-				static🐰large += 1
-			}
-			if message.raw_message!.contains("[CQ:image,file=46E10FDE4A72504A6DB116F9FBEF9FCA.jpg") {
-				static🐰idiot += 1
-			}
-			if message.raw_message!.contains("[CQ:image,file=B7B0DB87724D23B48134DAB2B4E25DA5.gif") {
-				dynamic🐰ear += 1
-			}
-			if message.raw_message!.contains("[CQ:image,file=AB3F72DEECF5C24A54BFEB938F253296.gif") {
-				dynamic🐰face += 1
-			}
-			// 更新数据到文件
-			updataVar(mode: "w", fileName: "count", type: .Count)
-			return
-		}
-		
-		// 判断色图
-		let CQImageRange = message.message!
-			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]", options: .regularExpression)
-		if CQImageRange != nil {
-			let urlRange = message.message![CQImageRange!]
-				.range(of: "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]", options: .regularExpression)
-			if urlRange != nil {
-				let url = message.message![urlRange!]
-				hentai(url: String(url))
-			}
-		}
-		
-		// 被at先去掉所有的"[CQ:at,qq=*********]"
-		self.message.raw_message = self.message.raw_message!
-			.replacingOccurrences(of: "[CQ:at,qq=\(message.self_id ?? 0)]", with: "")
-		
-		// 处理cmd
-		cmds()
-		if self.replyMessage.reply != nil{
-			return
-		}
-		
-		AICore()
-		return
-	}
-	
 	// 文件读写(更新)各种统计值
 	func updataVar(mode: Character, fileName: String, type: RWDataType){
 		let dir = FileManager.default.currentDirectoryPath + "/\(fileName)"
@@ -385,9 +297,98 @@ class AI {
 		} else {
 			self.replyMessage.reply = "\n发生了意料之外的事呢! 快去告诉QGG!\n服务器返回\n\(retVal)"
 		}
-		
-		
 		return
 	}
+	
+	// MARK: - 私聊信息处理
+	func privateMessage() {
+		print(message.message)
+		// 判断色图
+		let CQImageRange = message.message!
+			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]",
+				   options: .regularExpression)
+		if CQImageRange != nil {
+			let urlRange = message.message![CQImageRange!]
+				.range(of: "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]",
+					   options: .regularExpression)
+			if urlRange != nil {
+				let url = message.message![urlRange!]
+				hentai(url: String(url))
+			}
+		}
+		
+		cmds()
+		if self.replyMessage.reply != nil {
+			return
+		}
+		
+		AICore()
+		return
+	}
+	
+	// MARK: - 群聊信息处理
+	func groupMessage() {
+		print(message.message)
+		// 没被at则遍历信息
+		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
+			_ = message.raw_message!.map({ (c:Character) in
+				if c == "艹" || c == "草" {
+					艹times += 1
+				}
+			})
+			
+			// 判断是否有兔子表情
+			if message.raw_message!.contains("[CQ:image,file=9E93344667FC9DD95E85203DE5211C07.jpg") {
+				static🐰origin += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=16C212D34EC17F62F84430BB86748602.jpg") {
+				static🐰smoke += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=9628EC83AC4DA822149CE58859CF2F5D.jpg") {
+				static🐰black += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=89D910E941219E1B5DD7940ED4085C5F.jpg") {
+				static🐰large += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=46E10FDE4A72504A6DB116F9FBEF9FCA.jpg") {
+				static🐰idiot += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=B7B0DB87724D23B48134DAB2B4E25DA5.gif") {
+				dynamic🐰ear += 1
+			}
+			if message.raw_message!.contains("[CQ:image,file=AB3F72DEECF5C24A54BFEB938F253296.gif") {
+				dynamic🐰face += 1
+			}
+			// 更新数据到文件
+			updataVar(mode: "w", fileName: "count", type: .Count)
+			return
+		}
+		
+		// 判断色图
+		let CQImageRange = message.message!
+			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]", options: .regularExpression)
+		if CQImageRange != nil {
+			let urlRange = message.message![CQImageRange!]
+				.range(of: "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]", options: .regularExpression)
+			if urlRange != nil {
+				let url = message.message![urlRange!]
+				hentai(url: String(url))
+			}
+		}
+		
+		// 被at先去掉所有的"[CQ:at,qq=*********]"
+		self.message.raw_message = self.message.raw_message!
+			.replacingOccurrences(of: "[CQ:at,qq=\(message.self_id ?? 0)]", with: "")
+		
+		// 处理cmd
+		cmds()
+		if self.replyMessage.reply != nil{
+			return
+		}
+		
+		AICore()
+		return
+	}
+	
 }
 
