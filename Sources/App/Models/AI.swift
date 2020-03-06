@@ -109,16 +109,14 @@ class AI {
 			return
 			
 		case "echo":
-			var wordArray: [String] = self.message.raw_message!.map{String($0)}
-			var word = "";
-			guard wordArray.count >= 5 else { return }
-			wordArray.removeFirst(5)
+			var wordArray: [String] = cmds[1...].joined(separator: " ").map{String($0)}
+			var word = ""
 			for _ in 0..<wordArray.count {
 				word += "\n"
 				word += wordArray.reduce(into: ""){$0+=$1}
 				wordArray.remove(at: 0)
 			}
-			self.replyMessage.reply = word;
+			self.replyMessage.reply = word
 			return
 			
 		case "色图":
