@@ -73,18 +73,14 @@ class AI {
 		let cmds = self.message.raw_message!.split(separator: " ").map{ String($0) }
 		
 		switch cmds.first?.lowercased() {
-		case "run":
-			self.replyMessage.reply = "\nrun: permission denied"
-			//	execCmds(arg: [String](cmds[1...]))
-			return
-			
 		case "help":
 			self.replyMessage.reply = "\n" +
 				"aiBot 支持命令:\n" +
 				"help: 显示此帮助\n" +
 				"echo: \"回声\"\n" +
 				"GitHub: 返回aiBot的项目地址\n" +
-				"fortune: A fortune cookie\n" +
+				"roll: 随机返回一个1~100的数字\n" +
+				//"fortune: A fortune cookie\n" +
 				"兔子: 返回出现的兔子表情个数\n" +
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
 				"[图片]: 判断图片H的概率\n" +
@@ -125,12 +121,6 @@ class AI {
 			self.replyMessage.reply = word;
 			return
 			
-		case "fortune":
-			self.replyMessage.reply = "fortune功能下线维护了呢..." + (UInt.random(in: 0...9) == 10 ? "人家也不知道QGG什么时候修好..." : "")
-			//"\n" + execCmds(arg: ["fortune", "-a"])
-			
-			return
-			
 		case "色图":
 			if self.message.message_type! == "group" {
 				self.replyMessage.reply = "\n在群里发色图的话, 群主大人会生气的了\n私聊人家偷偷给你发哟~"
@@ -138,9 +128,22 @@ class AI {
 				self.replyMessage.reply = "\n\(SeTuURLs.randomElement() ?? "好像没有找到色图呢...")" + (UInt.random(in: 0...10) == 1 ? "\n小主人注意身心健康哦~" : "")
 				self.replyMessage.reply! += UInt.random(in: 0..<10) == 1 ? "/n(偷偷告许你, 给我私发色图就能把色图保存下来了!)" : ""
 			}
-			
 			return
 			
+		case "roll":
+			let points = Int.random(in: 1...6)
+			let icons = ["⚀","⚁","⚂","⚃","⚄","⚅"]
+			self.replyMessage.reply = "\n\(points)\(icons[points-1])" + (points == 6 ? "!":"")
+			return
+			
+		case "fortune":
+			self.replyMessage.reply = "fortune功能下线维护了呢..." + (UInt.random(in: 0...9) == 10 ? "人家也不知道QGG什么时候修好..." : "")
+			//"\n" + execCmds(arg: ["fortune", "-a"])
+			return
+		case "run":
+			self.replyMessage.reply = "\nrun: permission denied"
+			//	execCmds(arg: [String](cmds[1...]))
+			return
 			// 等待测试环境
 			//    case "surprise":
 			//			self.replyMessage.ban = true
