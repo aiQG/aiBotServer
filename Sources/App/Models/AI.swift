@@ -232,20 +232,20 @@ final class AI {
 	}
 	
 	func AICore() {
-	// 估价上亿的AI核心代码
-	self.replyMessage.reply =
-		self.message.raw_message!.reduce(into: "") { (res, c) in
-			switch c {
-			case "?", "？":
-				res! += "!"
-			case "吗", "呢":
-				res! += ""
-			default:
-				res! += String(c)
-			}
+		// 估价上亿的AI核心代码
+		self.replyMessage.reply =
+			self.message.raw_message!.reduce(into: "") { (res, c) in
+				switch c {
+				case "?", "？":
+					res! += "!"
+				case "吗", "呢":
+					res! += ""
+				default:
+					res! += String(c)
+				}
+		}
+		return
 	}
-	return
-}
 	
 	// 直接执行命令(DANGER!)
 	func execCmds(arg: [String]) -> String {
@@ -267,7 +267,7 @@ final class AI {
 			.split(separator: " ").map{String($0)}
 		let retVal = execCmds(arg: [String](ttt))
 		let json = JSON(parseJSON: retVal)
-
+		
 		if json["status"] == "success"{
 			if json["nudity"]["safe"].double ?? 0 >= 0.97 {
 				self.replyMessage.reply = "\n这不是色图" + (UInt.random(in: 0..<100) < 30 ? "哦~" : "")
@@ -301,7 +301,7 @@ final class AI {
 		if let CQImageRange = message.message!
 			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]",
 				   options: .regularExpression){
-		if	let urlRange = message.message![CQImageRange]
+			if	let urlRange = message.message![CQImageRange]
 				.range(of: "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]",
 					   options: .regularExpression){
 				let url = message.message![urlRange]
