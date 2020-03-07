@@ -34,7 +34,7 @@ struct AIMessage: Content {
 }
 
 
-class AI {
+final class AI {
 	var dateComponents: DateComponents
 	var isDeepNight: Bool = false
 	var isMorning: Bool = false
@@ -69,7 +69,7 @@ class AI {
 	}
 	
 	//处理指令
-	private func cmds() {
+	func cmds() {
 		let cmds = self.message.raw_message!.split(separator: " ").map{ String($0) }
 		
 		switch cmds.first?.lowercased() {
@@ -135,7 +135,7 @@ class AI {
 			return
 			
 		case "fortune":
-			self.replyMessage.reply = "fortune功能下线维护了呢..." + (UInt.random(in: 0...9) == 10 ? "人家也不知道QGG什么时候修好..." : "")
+			self.replyMessage.reply = "fortune功能下线维护了呢..." + (UInt.random(in: 0...9) == 1 ? "\n人家也不知道QGG什么时候修好..." : "")
 			//"\n" + execCmds(arg: ["fortune", "-a"])
 			return
 		case "run":
@@ -231,22 +231,21 @@ class AI {
 		}
 	}
 	
-	private func AICore() {
-		// 估价上亿的AI核心代码
-		self.replyMessage.reply =
-			self.message.raw_message!.reduce(into: "") { (res, c) in
-				switch c {
-				case "?", "？":
-					res! += "!"
-				case "吗", "呢":
-					res! += ""
-				default:
-					res! += String(c)
-				}
-		}
-		
-		return
+	func AICore() {
+	// 估价上亿的AI核心代码
+	self.replyMessage.reply =
+		self.message.raw_message!.reduce(into: "") { (res, c) in
+			switch c {
+			case "?", "？":
+				res! += "!"
+			case "吗", "呢":
+				res! += ""
+			default:
+				res! += String(c)
+			}
 	}
+	return
+}
 	
 	// 直接执行命令(DANGER!)
 	func execCmds(arg: [String]) -> String {
@@ -259,7 +258,6 @@ class AI {
 		task.waitUntilExit()
 		let data = pipe.fileHandleForReading.readDataToEndOfFile()
 		let output = String(data: data, encoding: .utf8) ?? ""
-		//		print(output)
 		return output
 	}
 	
@@ -271,7 +269,6 @@ class AI {
 		let json = JSON(parseJSON: retVal)
 
 		if json["status"] == "success"{
-
 			if json["nudity"]["safe"].double ?? 0 >= 0.97 {
 				self.replyMessage.reply = "\n这不是色图" + (UInt.random(in: 0..<100) < 30 ? "哦~" : "")
 				self.replyMessage.at_sender = true
@@ -289,8 +286,8 @@ class AI {
 			return
 		} else if json["status"] == "failure" {
 			self.replyMessage.reply = "\n图片上传失败\n" +
-				"服务器提示: \(json["error"]["message"])\n" +
-				(UInt.random(in: 0..<100) < 20 ? ", 再试一次吧~\n╮(￣▽￣)╭" : "")
+				"服务器提示: \(json["error"]["message"])" +
+				(UInt.random(in: 0..<100) < 20 ? "\n再试一次吧~\n╮(￣▽￣)╭" : "")
 			return
 		} else {
 			self.replyMessage.reply = "\n发生了意料之外的事呢! 快去告诉QGG!\n服务器返回\n\(retVal)"
@@ -300,17 +297,14 @@ class AI {
 	
 	// MARK: - 私聊信息处理
 	func privateMessage() {
-		print(message.message)
 		// 判断色图
-		let CQImageRange = message.message!
+		if let CQImageRange = message.message!
 			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]",
-				   options: .regularExpression)
-		if CQImageRange != nil {
-			let urlRange = message.message![CQImageRange!]
+				   options: .regularExpression){
+		if	let urlRange = message.message![CQImageRange]
 				.range(of: "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]",
-					   options: .regularExpression)
-			if urlRange != nil {
-				let url = message.message![urlRange!]
+					   options: .regularExpression){
+				let url = message.message![urlRange]
 				hentai(url: String(url))
 			}
 		}
@@ -326,7 +320,6 @@ class AI {
 	
 	// MARK: - 群聊信息处理
 	func groupMessage() {
-		print(message.message)
 		// 没被at则遍历信息
 		if !message.raw_message!.hasPrefix("[CQ:at,qq=\(message.self_id ?? 0)]") {
 			_ = message.raw_message!.map({ (c:Character) in
@@ -363,13 +356,13 @@ class AI {
 		}
 		
 		// 判断色图
-		let CQImageRange = message.message!
-			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]", options: .regularExpression)
-		if CQImageRange != nil {
-			let urlRange = message.message![CQImageRange!]
-				.range(of: "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]", options: .regularExpression)
-			if urlRange != nil {
-				let url = message.message![urlRange!]
+		if let CQImageRange = message.message!
+			.range(of: "\\[CQ:image,file=[A-F0-9]*(\\.jpg|\\.png),url=(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]\\]",
+				   options: .regularExpression){
+			if let urlRange = message.message![CQImageRange]
+				.range(of: "(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]",
+					   options: .regularExpression){
+				let url = message.message![urlRange]
 				hentai(url: String(url))
 			}
 		}
