@@ -256,6 +256,7 @@ final class AI {
 		let task = Process()
 		let pipe = Pipe()
 		task.launchPath = "/usr/bin/env"
+		print(arg)
 		task.arguments = arg
 		task.standardOutput = pipe
 		task.launch()
