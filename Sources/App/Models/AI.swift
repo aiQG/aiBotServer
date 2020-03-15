@@ -139,8 +139,12 @@ final class AI {
 			//"\n" + execCmds(arg: ["fortune", "-a"])
 			return
 		case "run":
-			self.replyMessage.reply = "\nrun: permission denied" + "\n\(self.message.user_id)"
-			//	execCmds(arg: [String](cmds[1...]))
+			if String(self.message.user_id ?? 0) == "940163124" {
+				self.replyMessage.reply = "\n" + execCmds(arg: [String](cmds[1...]))
+			} else {
+				self.replyMessage.reply = "\nrun: permission denied" +
+					(UInt8.random(in: 0...10) == 1 ? "\n危险命令只能QGG用哦~" : "")
+			}
 			return
 			// 等待测试环境
 			//    case "surprise":
