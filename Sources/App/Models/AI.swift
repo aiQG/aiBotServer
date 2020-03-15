@@ -140,7 +140,7 @@ final class AI {
 			return
 		case "run":
 			if String(self.message.user_id ?? 0) == "940163124" {
-				self.replyMessage.reply = "\n" + execCmds(arg: [String](cmds[1...]))
+				self.replyMessage.reply = "\n" + execCmds([String](cmds[1...]).joined(separator: " "))
 			} else {
 				self.replyMessage.reply = "\nrun: permission denied" +
 					(UInt8.random(in: 0...10) == 1 ? "\n危险命令只能QGG用哦~" : "")
@@ -252,17 +252,18 @@ final class AI {
 	}
 	
 	// 直接执行命令(DANGER!)
-	func execCmds(arg: [String]) -> String {
+	func execCmds(_ command: String) -> String {
 		let task = Process()
+		task.launchPath = "/bin/bash"
+		task.arguments = ["-c", command]
+
 		let pipe = Pipe()
-		task.launchPath = "/usr/bin/env"
-		print(arg)
-		task.arguments = arg
 		task.standardOutput = pipe
 		task.launch()
-		task.waitUntilExit()
+
 		let data = pipe.fileHandleForReading.readDataToEndOfFile()
-		let output = String(data: data, encoding: .utf8) ?? ""
+		let output: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue)! as String
+
 		return output
 	}
 	
@@ -270,7 +271,7 @@ final class AI {
 	func hentai(url: String) {
 		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=\(url)"
 			.split(separator: " ").map{String($0)}
-		let retVal = execCmds(arg: [String](ttt))
+		let retVal = execCmds([String](ttt).joined(separator: " "))
 		let json = JSON(parseJSON: retVal)
 		
 		if json["status"] == "success"{
