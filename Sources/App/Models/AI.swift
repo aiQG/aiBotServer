@@ -139,7 +139,7 @@ final class AI {
 			//"\n" + execCmds(arg: ["fortune", "-a"])
 			return
 		case "run":
-			self.replyMessage.reply = "\nrun: permission denied"
+			self.replyMessage.reply = "\nrun: permission denied" + "\n\(self.message.user_id)"
 			//	execCmds(arg: [String](cmds[1...]))
 			return
 			// 等待测试环境
