@@ -148,7 +148,7 @@ final class AI {
 			}
 			return
 			
-		case "ACG":
+		case "acg":
 			self.replyMessage.reply = execCmds("python3 ACGCrawler.py")
 			return
 			// 等待测试环境
