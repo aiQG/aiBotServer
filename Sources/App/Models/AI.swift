@@ -80,6 +80,7 @@ final class AI {
 				"echo: \"回声\"\n" +
 				"GitHub: 返回aiBot的项目地址\n" +
 				"roll: 随机返回一个1~100的数字\n" +
+				"ACG: 查询本周新番\n" +
 				//"fortune: A fortune cookie\n" +
 				"兔子: 返回出现的兔子表情个数\n" +
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
@@ -145,6 +146,10 @@ final class AI {
 				self.replyMessage.reply = "\nrun: permission denied" +
 					(UInt8.random(in: 0...10) == 1 ? "\n危险命令只能QGG用哦~" : "")
 			}
+			return
+			
+		case "ACG":
+			self.replyMessage.reply = execCmds("python3 ACGCrawler.py")
 			return
 			// 等待测试环境
 			//    case "surprise":

@@ -32,7 +32,7 @@ for weekday in doc.xpath('//ul/li/dl/dd[@class]'):
         dic[weekday.get('class')] += [str]
 
 output = 'Weekly ACG:\n'
-for key in dic:
+for key in ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]:
     output += "✦" + key + "---------\n"
     for i in dic[key]:
         output += i + "\n"
