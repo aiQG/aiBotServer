@@ -79,7 +79,7 @@ final class AI {
 				"help: 显示此帮助\n" +
 				"echo: \"回声\"\n" +
 				"GitHub: 返回aiBot的项目地址\n" +
-				"roll: 随机返回一个1~100的数字\n" +
+				"roll: 随机返回一个1~6的数字\n" +
 				"ACG: 查询本周新番\n" +
 				//"fortune: A fortune cookie\n" +
 				"兔子: 返回出现的兔子表情个数\n" +
@@ -149,7 +149,7 @@ final class AI {
 			return
 			
 		case "acg":
-			self.replyMessage.reply = execCmds("python3 ACGCrawler.py")
+			self.replyMessage.reply = "\n" + execCmds("python3 ACGCrawler.py")
 			return
 			// 等待测试环境
 			//    case "surprise":
