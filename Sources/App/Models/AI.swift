@@ -230,7 +230,7 @@ final class AI {
 			case "w":
 				do {
 					SeTuURLs = SeTuURLs.filter {
-						execCmds("curl \(x)").count > 0
+						execCmds("curl \($0)").count > 0
 					}
 					let text = SeTuURLs.joined(separator: "\n")
 					try text.write(to: fileURL, atomically: false, encoding: .utf8)
