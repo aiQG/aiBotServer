@@ -231,7 +231,7 @@ final class AI {
 				do {
 					SeTuURLs = SeTuURLs.map { (x) -> String in
 						print(x)
-						print(execCmds("curl \(x)").count)
+						print(execCmds("curl \(x)"))
 						
 						return x
 					}
@@ -273,7 +273,7 @@ final class AI {
 		task.launch()
 
 		let data = pipe.fileHandleForReading.readDataToEndOfFile()
-		let output: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue)! as String
+		let output: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue) ?? "aiBot: NSString转换失败" as String
 
 		return output
 	}
