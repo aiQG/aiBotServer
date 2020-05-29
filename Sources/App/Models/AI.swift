@@ -230,6 +230,7 @@ final class AI {
 			case "w":
 				do {
 					SeTuURLs = SeTuURLs.filter {
+						print($0)
 						execCmds("curl \($0)") != ""
 					}
 					let text = SeTuURLs.joined(separator: "\n")
