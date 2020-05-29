@@ -150,12 +150,13 @@ final class AI {
 		case "acg":
 			self.replyMessage.reply = "\n" + execCmds("python3 ACGCrawler.py")
 			return
-			// 等待测试环境
-			//    case "surprise":
-			//			self.replyMessage.ban = true
-			//			self.replyMessage.reply = "\nAre you surprised?"
-			//			print(self.replyMessage)
-			//			return
+			
+//    //等待测试环境
+//      case "surprise":
+//	  		self.replyMessage.ban = true
+//	  		self.replyMessage.reply = "\nAre you surprised?"
+//	  		print(self.replyMessage)
+//	  		return
 			
 		default:
 			return
@@ -228,6 +229,9 @@ final class AI {
 				}
 			case "w":
 				do {
+					SeTuURLs = SeTuURLs.fliter {
+						execCmds("curl \($0)") != ""
+					}
 					let text = SeTuURLs.joined(separator: "\n")
 					try text.write(to: fileURL, atomically: false, encoding: .utf8)
 				} catch {
