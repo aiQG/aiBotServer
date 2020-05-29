@@ -272,7 +272,7 @@ final class AI {
 	}
 	
 	// 色图判断
-	func hentai(url: String) {
+	func hentai(url: String, isFinal: Bool = false) {
 		let ttt = "curl -X GET -G https://api.sightengine.com/1.0/check.json -d models=nudity -d api_user=1761246545 -d api_secret=5GGjxXwzvpS5cda898rq -d url=\(url)"
 			.split(separator: " ").map{String($0)}
 		let retVal = execCmds([String](ttt).joined(separator: " "))
@@ -294,11 +294,13 @@ final class AI {
 				self.replyMessage.reply! += 1 - (json["nudity"]["safe"].double ?? 0) >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄>⁄ω⁄<⁄ ⁄)⁄" : "\n已保存到服务器"
 			}
 			return
-		} else if json["status"] == "failure" {
+		} else if json["status"] == "failure" && isFinal {
 			self.replyMessage.reply = "\n图片上传失败\n" +
 				"服务器提示: \(json["error"]["message"])" +
 				(UInt.random(in: 0..<100) < 20 ? "\n再试一次吧~\n╮(￣▽￣)╭" : "")
 			return
+		} else if json["status"] == "failure" && !isFinal {
+			self.hentai(url: url, isFinal: true)
 		} else {
 			self.replyMessage.reply = "\n发生了意料之外的事呢! 快去告诉QGG!\n服务器返回\n\(retVal)"
 		}
