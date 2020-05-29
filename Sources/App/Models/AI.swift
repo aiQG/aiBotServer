@@ -39,6 +39,7 @@ final class AI {
 	var isDeepNight: Bool = false
 	var isMorning: Bool = false
 	var isWeekend: Bool = false
+	var isMonday: Bool = false
 	var message: JSONMessage!
 	var replyMessage = AIMessage()
 	init(m: JSONMessage) {
@@ -48,6 +49,7 @@ final class AI {
 		isDeepNight = dateComponents.hour! < 5
 		isMorning = (6...8).contains(dateComponents.hour!)
 		isWeekend = dateComponents.weekday! == 1 || dateComponents.weekday! == 7
+		isMonday = dateComponents.weekday! == 2
 		self.message = m
 		// 从文件更新数据
 		updataVar(mode: "r", fileName: "count", type: .Count)
@@ -85,7 +87,16 @@ final class AI {
 				"兔子: 返回出现的兔子表情个数\n" +
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
 				"[图片]: 判断图片H的概率\n" +
-			"色图: 返回一张曾经出现过的色图(当前共\(SeTuURLs.count)张)"
+			"色图: 返回一张曾经出现过的色图(当前共\(SeTuURLs.count)张)\n" +
+			"update: 刷新色图缓存"
+			return
+			
+		case "update":
+			SeTuURLs = SeTuURLs.filter {
+				execCmds("curl \($0)").count > 0
+			}
+			self.replyMessage.reply = "\n" +
+			"色图更新为 \(SeTuURLs.count) 张"
 			return
 			
 		case "艹", "草":
@@ -229,9 +240,6 @@ final class AI {
 				}
 			case "w":
 				do {
-					SeTuURLs = SeTuURLs.filter {
-						execCmds("curl \($0)").count > 0
-					}
 					let text = SeTuURLs.joined(separator: "\n")
 					try text.write(to: fileURL, atomically: false, encoding: .utf8)
 				} catch {
@@ -295,7 +303,7 @@ final class AI {
 					SeTuURLs.append(url)
 					updataVar(mode: "w", fileName: "SeTuURL", type: .SeTuURL)
 				}
-				self.replyMessage.reply! += 1 - (json["nudity"]["safe"].double ?? 0) >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄>⁄ω⁄<⁄ ⁄)⁄" : "\n已保存到服务器"
+				self.replyMessage.reply! += 1 - (json["nudity"]["safe"].double ?? 0) >= 0.75 ? "\n啊!人家不要看这种东西!\n再这样下去就要变得奇怪了...\n⁄(⁄ ⁄>⁄ω⁄<⁄ ⁄)⁄" : "\nURL已保存到服务器"
 			}
 			return
 		} else if json["status"] == "failure" && isFinal {
