@@ -88,7 +88,7 @@ final class AI {
 				"艹/草: 返回出现的\"艹\"/\"草\"的个数\n" +
 				"[图片]: 判断图片H的概率\n" +
 			"色图: 返回一张曾经出现过的色图(当前共\(SeTuURLs.count)张)\n" +
-			"update: 刷新色图缓存"
+			"update: 刷新色图缓存(更新很慢)"
 			return
 			
 		case "update":
