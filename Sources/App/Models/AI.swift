@@ -229,11 +229,8 @@ final class AI {
 				}
 			case "w":
 				do {
-					SeTuURLs = SeTuURLs.map { (x) -> String in
-						print(x)
-						print(execCmds("curl \(x)").count)
-						
-						return x
+					SeTuURLs = SeTuURLs.filter {
+						execCmds("curl \(x)").count > 0
 					}
 					let text = SeTuURLs.joined(separator: "\n")
 					try text.write(to: fileURL, atomically: false, encoding: .utf8)
