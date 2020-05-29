@@ -230,6 +230,7 @@ final class AI {
 			case "w":
 				do {
 					SeTuURLs = SeTuURLs.map { (x) -> String in
+						print(x)
 						print(execCmds("curl \(x)"))
 						
 						return x
