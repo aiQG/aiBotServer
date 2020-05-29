@@ -273,7 +273,7 @@ final class AI {
 		task.launch()
 
 		let data = pipe.fileHandleForReading.readDataToEndOfFile()
-		let output: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue) ?? "aiBot: NSString转换失败" as String
+		let output: String = NSString(data: data, encoding: String.Encoding.utf8.rawValue) ?? NSString(string: "aiBot: NSString转换失败") as String
 
 		return output
 	}
