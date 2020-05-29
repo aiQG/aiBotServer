@@ -231,7 +231,7 @@ final class AI {
 				do {
 					SeTuURLs = SeTuURLs.map { (x) -> String in
 						print(x)
-						print(execCmds("curl \(x)"))
+						print(execCmds("curl \(x)").count)
 						
 						return x
 					}
